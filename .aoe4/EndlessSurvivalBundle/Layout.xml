@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LayoutRoot>
+  <RootPanel Orientation="Vertical">
+    <LayoutPanel Orientation="Horizontal">
+      <LayoutAnchorablePaneGroup Orientation="Horizontal" DockWidth="399" FloatingWidth="300" FloatingHeight="800" FloatingLeft="200" FloatingTop="200">
+        <LayoutAnchorablePane DockWidth="399" DockHeight="200" FloatingWidth="300" FloatingHeight="800" FloatingLeft="200" FloatingTop="200">
+          <LayoutAnchorable AutoHideMinWidth="100" AutoHideMinHeight="100" Title="Asset Explorer" IsSelected="True" ContentId="EssenceEditor.AssetExplorer" FloatingLeft="200" FloatingTop="200" FloatingWidth="300" FloatingHeight="800" LastActivationTimeStamp="05/09/2023 19:54:04" />
+        </LayoutAnchorablePane>
+      </LayoutAnchorablePaneGroup>
+      <LayoutPanel Orientation="Vertical">
+        <LayoutDocumentPaneGroup Orientation="Horizontal">
+          <LayoutDocumentPane Id="23dee6d3-35d0-4ced-9b34-eeda7e5c7fee" DockWidth="0.857577717630448*">
+            <LayoutDocument Title="ags_endless_survival.rdo" ContentId="Reflect|Essence.Editor.ReflectEditor.Controls.DefaultReflectControlActivator|0x47187D6CA11EA5C8" LastActivationTimeStamp="05/09/2023 19:44:02" />
+            <LayoutDocument Title="ags_endless_survival.scar" ContentId="FileName|Script|assets\scar\gamemodes\ags_endless_survival.scar" ToolTip="E:\Mods\Age of Empires IV\AOE4-EndlessSurvivalBundle\assets\scar\gamemodes\ags_endless_survival.scar" LastActivationTimeStamp="05/09/2023 19:53:55" />
+            <LayoutDocument Title="ags_tournament_nomad.scar" ContentId="FileName|Script|assets\scar\gamemodes\ags_tournament_nomad.scar" ToolTip="E:\Mods\Age of Empires IV\AOE4-EndlessSurvivalBundle\assets\scar\gamemodes\ags_tournament_nomad.scar" LastActivationTimeStamp="05/09/2023 19:41:33" />
+            <LayoutDocument Title="ags_conquest_data.scar*" IsSelected="True" IsLastFocusedDocument="True" ContentId="FileName|Script|assets\scar\conditions\conditiondata\ags_conquest_data.scar" ToolTip="E:\Mods\Age of Empires IV\AOE4-EndlessSurvivalBundle\assets\scar\conditions\conditiondata\ags_conquest_data.scar" LastActivationTimeStamp="05/09/2023 19:54:18" />
+          </LayoutDocumentPane>
+          <LayoutDocumentPane>
+            <LayoutDocument Title="ags_global_settings.scar" IsSelected="True" ContentId="FileName|Script|assets\scar\ags_global_settings.scar" ToolTip="E:\Mods\Age of Empires IV\AOE4-EndlessSurvivalBundle\assets\scar\ags_global_settings.scar" FloatingLeft="1462" FloatingTop="618" FloatingWidth="980" FloatingHeight="1114" LastActivationTimeStamp="05/09/2023 19:52:47" PreviousContainerId="23dee6d3-35d0-4ced-9b34-eeda7e5c7fee" PreviousContainerIndex="1" />
+            <LayoutDocument Title="ags_testing.scar" ContentId="FileName|Script|assets\scar\specials\ags_testing.scar" ToolTip="E:\Mods\Age of Empires IV\AOE4-EndlessSurvivalBundle\assets\scar\specials\ags_testing.scar" FloatingLeft="1455" FloatingTop="617" FloatingWidth="980" FloatingHeight="1114" LastActivationTimeStamp="05/09/2023 19:52:08" PreviousContainerId="23dee6d3-35d0-4ced-9b34-eeda7e5c7fee" PreviousContainerIndex="1" />
+            <LayoutDocument Title="ags_cardinal.scar" ContentId="FileName|Script|assets\scar\ags_cardinal.scar" ToolTip="E:\Mods\Age of Empires IV\AOE4-EndlessSurvivalBundle\assets\scar\ags_cardinal.scar" FloatingLeft="432" FloatingTop="619" FloatingWidth="2129" FloatingHeight="1114" LastActivationTimeStamp="05/09/2023 19:52:09" PreviousContainerId="23dee6d3-35d0-4ced-9b34-eeda7e5c7fee" PreviousContainerIndex="3" />
+          </LayoutDocumentPane>
+        </LayoutDocumentPaneGroup>
+      </LayoutPanel>
+    </LayoutPanel>
+    <LayoutAnchorablePane Id="e44d34b5-b1e5-455b-8daf-f82552b55711" Name="anchorablesPane" DockHeight="285" />
+    <LayoutAnchorablePane Id="c47e7669-679a-4ac3-999b-0557bcf54dbb" DockHeight="190">
+      <LayoutAnchorable AutoHideMinWidth="100" AutoHideMinHeight="100" Title="Output" ContentId="Output" LastActivationTimeStamp="05/04/2023 23:32:26" />
+      <LayoutAnchorable AutoHideHeight="229" AutoHideMinWidth="100" AutoHideMinHeight="100" Title="Error List" IsSelected="True" ContentId="ErrorList" LastActivationTimeStamp="05/09/2023 19:53:51" />
+      <LayoutAnchorable AutoHideHeight="266" AutoHideMinWidth="100" AutoHideMinHeight="100" Title="Object Browser" ContentId="ScenarioEditor.ObjectBrowser" LastActivationTimeStamp="04/13/2022 13:49:45" />
+      <LayoutAnchorable AutoHideHeight="442" AutoHideMinWidth="100" AutoHideMinHeight="100" Title="Type Browser" ContentId="ScenarioEditor.ReflectTypeBrowser" LastActivationTimeStamp="04/28/2023 10:24:58" />
+      <LayoutAnchorable AutoHideMinWidth="100" AutoHideMinHeight="100" Title="Favorites" ContentId="ScenarioEditor.Favorites" LastActivationTimeStamp="04/28/2023 10:25:12" />
+    </LayoutAnchorablePane>
+  </RootPanel>
+  <TopSide />
+  <RightSide>
+    <LayoutAnchorGroup>
+      <LayoutAnchorable AutoHideMinWidth="100" AutoHideMinHeight="100" Title="Playback" ContentId="EssenceEditor.Playback" FloatingLeft="200" FloatingTop="200" FloatingWidth="300" FloatingHeight="100" LastActivationTimeStamp="11/27/2015 11:24:02" />
+    </LayoutAnchorGroup>
+    <LayoutAnchorGroup Id="2548db53-601d-4bc5-a122-1f7d04458881">
+      <LayoutAnchorable AutoHideMinWidth="100" AutoHideMinHeight="100" Title="Properties" ContentId="EssenceEditor.Properties" FloatingLeft="200" FloatingTop="200" FloatingWidth="300" FloatingHeight="800" LastActivationTimeStamp="04/08/2022 19:32:36" />
+    </LayoutAnchorGroup>
+  </RightSide>
+  <LeftSide />
+  <BottomSide />
+  <FloatingWindows>
+    <LayoutAnchorableFloatingWindow>
+      <LayoutAnchorablePaneGroup Orientation="Horizontal" DockHeight="401" FloatingWidth="1205" FloatingHeight="886" FloatingLeft="952" FloatingTop="135">
+        <LayoutAnchorablePane Id="8650acdb-d657-4216-85a9-24709482ba39" DockHeight="401" FloatingWidth="1205" FloatingHeight="886" FloatingLeft="952" FloatingTop="135">
+          <LayoutAnchorable AutoHideMinWidth="100" AutoHideMinHeight="100" Title="Find '64c5019a145c4e4da448dbd3adeea61e'" IsSelected="True" ContentId="FindResults" FloatingLeft="952" FloatingTop="135" FloatingWidth="1205" FloatingHeight="886" LastActivationTimeStamp="05/09/2023 19:54:18" />
+        </LayoutAnchorablePane>
+      </LayoutAnchorablePaneGroup>
+    </LayoutAnchorableFloatingWindow>
+  </FloatingWindows>
+  <Hidden>
+    <LayoutAnchorable AutoHideMinWidth="100" AutoHideMinHeight="100" Title="Console" IsSelected="True" ContentId="Console" LastActivationTimeStamp="05/09/2023 19:20:23" />
+    <LayoutAnchorable AutoHideMinWidth="100" AutoHideMinHeight="100" Title="Globals" IsSelected="True" ContentId="Globals" LastActivationTimeStamp="05/09/2023 19:20:23" PreviousContainerId="e44d34b5-b1e5-455b-8daf-f82552b55711" PreviousContainerIndex="0" />
+    <LayoutAnchorable AutoHideMinWidth="100" AutoHideMinHeight="100" Title="Locals" IsSelected="True" ContentId="Locals" LastActivationTimeStamp="05/09/2023 19:20:23" PreviousContainerId="e44d34b5-b1e5-455b-8daf-f82552b55711" PreviousContainerIndex="0" />
+    <LayoutAnchorable AutoHideMinWidth="100" AutoHideMinHeight="100" Title="Call Stack" IsSelected="True" ContentId="CallStack" LastActivationTimeStamp="05/09/2023 19:20:23" PreviousContainerId="e44d34b5-b1e5-455b-8daf-f82552b55711" PreviousContainerIndex="0" />
+    <LayoutAnchorable AutoHideMinWidth="100" AutoHideMinHeight="100" Title="Blueprint List" IsSelected="True" ContentId="ScenarioEditor.AssetBlueprint" LastActivationTimeStamp="05/09/2023 19:20:23" PreviousContainerId="e44d34b5-b1e5-455b-8daf-f82552b55711" PreviousContainerIndex="1" />
+    <LayoutAnchorable AutoHideMinWidth="100" AutoHideMinHeight="100" Title="Painter" IsSelected="True" ContentId="ScenarioEditor.Painter" FloatingLeft="200" FloatingTop="200" FloatingWidth="300" FloatingHeight="800" LastActivationTimeStamp="05/09/2023 19:20:23" PreviousContainerId="2548db53-601d-4bc5-a122-1f7d04458881" PreviousContainerIndex="1" />
+    <LayoutAnchorable AutoHideMinWidth="100" AutoHideMinHeight="100" Title="Transformation" IsSelected="True" ContentId="ScenarioEditor.Transformation" FloatingLeft="200" FloatingTop="200" FloatingWidth="250" FloatingHeight="300" LastActivationTimeStamp="05/09/2023 19:20:23" PreviousContainerId="e44d34b5-b1e5-455b-8daf-f82552b55711" PreviousContainerIndex="0" />
+    <LayoutAnchorable AutoHideMinWidth="100" AutoHideMinHeight="100" Title="Find References Results 1" IsSelected="True" ContentId="FindReferencesResults1" LastActivationTimeStamp="05/09/2023 19:20:23" PreviousContainerId="e44d34b5-b1e5-455b-8daf-f82552b55711" PreviousContainerIndex="0" />
+  </Hidden>
+</LayoutRoot>

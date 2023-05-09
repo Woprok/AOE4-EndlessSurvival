@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ProjectSettings xmlns:i="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.datacontract.org/2004/07/Essence.Editor.Core">
+	<LastDocumentDirectory i:nil="true" />
+	<LastDocumentType>Script</LastDocumentType>
+	<PluginSettings xmlns:d2p1="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
+		<d2p1:anyType xmlns:d3p1="http://schemas.datacontract.org/2004/07/Essence.Editor.Controls" i:type="d3p1:FileExplorerProjectSettings">
+			<d3p1:ExpandedPaths>
+				<d2p1:KeyValueOfstringArrayOfstringty7Ep6D1>
+					<d2p1:Key>AssetExplorerGeneric</d2p1:Key>
+					<d2p1:Value>
+						<d2p1:string>assets\locdb\EndlessSurvivalBundle.locdb</d2p1:string>
+						<d2p1:string>assets\scar\balance</d2p1:string>
+						<d2p1:string>assets\scar\conditions\conditiondata\ags_conquest_data.scar</d2p1:string>
+						<d2p1:string>assets\scar\gamemodes</d2p1:string>
+						<d2p1:string>assets\scar\specials\ags_testing.scar</d2p1:string>
+						<d2p1:string>assets\scar\winconditions</d2p1:string>
+						<d2p1:string>assets\scar\ags_cardinal.scar</d2p1:string>
+						<d2p1:string>assets\scar\ags_global_settings.scar</d2p1:string>
+					</d2p1:Value>
+				</d2p1:KeyValueOfstringArrayOfstringty7Ep6D1>
+			</d3p1:ExpandedPaths>
+			<d3p1:Version>0</d3p1:Version>
+		</d2p1:anyType>
+		<d2p1:anyType xmlns:d3p1="http://schemas.datacontract.org/2004/07/Essence.Editor.ScriptEditor" i:type="d3p1:ScriptProjectSettings">
+			<d3p1:BookmarkSettings />
+			<d3p1:BreakpointSettings />
+		</d2p1:anyType>
+	</PluginSettings>
+	<RecentFiles>
+		<History xmlns:d3p1="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
+			<d3p1:string>E:\Mods\Age of Empires IV\AOE4-EndlessSurvivalBundle\assets\scar\conditions\conditiondata\ags_conquest_data.scar</d3p1:string>
+			<d3p1:string>E:\Mods\Age of Empires IV\AOE4-EndlessSurvivalBundle\assets\scar\gamemodes\ags_tournament_nomad.scar</d3p1:string>
+			<d3p1:string>E:\Mods\Age of Empires IV\AOE4-EndlessSurvivalBundle\assets\scar\gamemodes\ags_endless_survival.scar</d3p1:string>
+			<d3p1:string>E:\Mods\Age of Empires IV\AOE4-EndlessSurvivalBundle\assets\scar\ags_cardinal.scar</d3p1:string>
+			<d3p1:string>E:\Mods\Age of Empires IV\AOE4-EndlessSurvivalBundle\assets\scar\ags_global_settings.scar</d3p1:string>
+			<d3p1:string>E:\Mods\Age of Empires IV\AOE4-EndlessSurvivalBundle\assets\scar\specials\ags_testing.scar</d3p1:string>
+			<d3p1:string>E:\Mods\Age of Empires IV\AOE4-EndlessSurvivalBundle\assets\scar\winconditions\ags_endless_survival.rdo</d3p1:string>
+			<d3p1:string>E:\Mods\Age of Empires IV\AOE4-EndlessSurvivalBundle\assets\locdb\EndlessSurvivalBundle.locdb</d3p1:string>
+		</History>
+	</RecentFiles>
+</ProjectSettings>
