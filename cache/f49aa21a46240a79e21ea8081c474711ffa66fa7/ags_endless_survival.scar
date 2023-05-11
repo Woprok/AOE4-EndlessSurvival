@@ -1,0 +1,49 @@
+---------------------------------------------------------------------------------------------------
+-- Authors:
+-- Relic
+-- Woprock
+--
+-- Description:
+-- Entry point for an gamemode.
+-- Contains only gamemode specific functionality and generic delegate calls.
+-- Everything else is imported and done as part of "ags_cardinal.scar"
+---------------------------------------------------------------------------------------------------
+
+import("ags_cardinal.scar")
+
+AGS_Testing_Hot_Reload("specials/ags_survival_test.scar")
+AGS_Testing_Hot_Reload("conditions/ags_protection.scar")
+---------------------------------------------------------------------------------------------------
+-- Delegates:
+---------------------------------------------------------------------------------------------------
+-- This file is loaded last, this means that all methods are invoked at the end of chain.
+-- It might be possible to assume that all imported modules are finished with the stage when we are called.
+Core_RegisterModule("AGS_Endless_Survival")	
+
+function AGS_Endless_Survival_AdjustSettings()
+	AGS_Print("AGS_Endless_Survival_AdjustSettings")
+
+	AGS_GLOBAL_SETTINGS.Protection = true
+	AGS_GLOBAL_SETTINGS.ProtectionSettings = {
+		ProtectablesCount = 1, -- at the moment we support only single building
+		ProtectablesType = "building", -- this does nothing
+		IsTeamShared = true, -- Eliminate everyone, this is always on, alternative is not supported yet
+		ShowHealth = true, -- Visual ? TODO
+		ChangeRelations = true, -- Forced peace treaty 		
+	}
+	
+	AGS_GLOBAL_SETTINGS.Tributes = true
+	AGS_GLOBAL_SETTINGS.TributesTaxRate = 0.0
+	AGS_GLOBAL_SETTINGS.Relations = false
+	AGS_GLOBAL_SETTINGS.PlayerColors.IsEnforcing = false
+	AGS_GLOBAL_SETTINGS.MapVision = AGS_GS_MAP_VISION_REVEALED
+	AGS_GLOBAL_SETTINGS.RevealFowOnElimination = true
+	AGS_GLOBAL_SETTINGS.RevealSpawn = true
+	AGS_GLOBAL_SETTINGS.StartingAge = AGS_GS_AGE_DARK
+	AGS_GLOBAL_SETTINGS.StartingResources = AGS_GS_RESOURCES_NORMAL
+	AGS_GLOBAL_SETTINGS.TeamVision = AGS_GS_TEAM_VISION_ALWAYS
+	-- We are actively avoiding player to win or loose in other ways
+	AGS_GLOBAL_SETTINGS.TeamVictory = AGS_GS_TEAM_VICTORY_DYNAMIC
+	-- Disables annihilation, elimination and surrender from determining victory
+	AGS_GLOBAL_SETTINGS.IsSandBox = true
+end

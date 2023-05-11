@@ -137,7 +137,7 @@ function Diplomacy_RelationToTooltipConverter(observer, target)
 		elseif relation == R_ENEMY then 
 			return Loc_FormatText(11161256, Player_GetDisplayName(observer.id))				-- "%1PLAYER_NAME% is hostile to you"
 		else
-			return Loc_FormatText(11161257, Player_GetDisplayName(observer.id))				-- "%1PLAYER_NAME% is neutral  to you"
+			return Loc_FormatText(11161257, Player_GetDisplayName(observer.id))				-- "%1PLAYER_NAME% is neutral to you"
 		end					
 	end
 	return Loc_Empty()

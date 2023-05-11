@@ -10,8 +10,8 @@
 			</DataObject>
 		</DataProperty>
 		<DataProperty Name="m_gameModeType" Type="String" Value=""/>
-		<DataProperty Name="m_scarWinConditionFile" Type="String" Value=""/>
-		<DataProperty Name="m_feAllowSelectingStartingLocations" Type="Bool" Value="true"/>
+		<DataProperty Name="m_scarWinConditionFile" Type="String" Value="gamemodes\ags_endless_survival"/>
+		<DataProperty Name="m_feAllowSelectingStartingLocations" Type="Bool" Value="false"/>
 		<DataProperty Name="m_playerUpgrades" Type="Object"/>
 		<DataProperty Name="m_feIcon" Type="String" Value="icons\gaia\animals\wolf"/>
 		<DataProperty Name="m_scarMissionFile" Type="String" Value=""/>
@@ -39,7 +39,7 @@
 				<DataProperty Name="m_locStringKey" Type="Int32" Value="397"/>
 			</DataObject>
 		</DataProperty>
-		<DataProperty Name="m_tuningModGUID" Type="String" Value=""/>
+		<DataProperty Name="m_tuningModGUID" Type="String" Value="dc9c718459894f58869e73a73f33effc"/>
 		<DataProperty Name="m_optionsUIDescriptor" Type="Object">
 			<DataValue Name="WinCondition::OptionsUIDescriptor">6741934119468753607</DataValue>
 			<!--WinCondition/WinCondition::OptionsUIDescriptor/-->
@@ -51,10 +51,50 @@
 			<DataValue Name="PrecacheList">4580710104844298454</DataValue>
 			<!--WinCondition/PrecacheList/-->
 			<DataObject Name="" Type="PrecacheList" Id="4580710104844298454" OwnerId="5122982481647019464">
-				<DataProperty Name="m_precacheItems" Type="Object"/>
+				<DataProperty Name="m_precacheItems" Type="Object">
+					<DataValue Name="SquadPrecacheItem">11225618916440384102</DataValue>
+					<DataValue Name="EntityPrecacheItem">7967115773896959231</DataValue>
+					<DataValue Name="EntityPrecacheItem">4626328489214126819</DataValue>
+					<!--WinCondition/PrecacheList/EntityPrecacheItem/-->
+					<DataObject Name="" Type="EntityPrecacheItem" Id="4626328489214126819" OwnerId="4580710104844298454">
+						<DataProperty Name="#BaseTypes" Type="String" Value="IPrecacheItem#0|"/>
+						<DataProperty Name="m_blueprint" Type="Object">
+							<DataValue Name="ReflectPBG_EntityProperties">8311103380225216632</DataValue>
+							<!--WinCondition/PrecacheList/EntityPrecacheItem/ReflectPBG_EntityProperties/-->
+							<DataObject Name="" Type="ReflectPBG_EntityProperties" Id="8311103380225216632" OwnerId="4626328489214126819">
+								<DataProperty Name="#BaseTypes" Type="String" Value="PropertyBagGroupReflectReference#0|Provider_PropertyBagGroup#0|"/>
+								<DataProperty Name="m_fileName" Type="String" Value="york_wooden_castle_eng"/>
+							</DataObject>
+						</DataProperty>
+					</DataObject>
+					<!--WinCondition/PrecacheList/EntityPrecacheItem/-->
+					<DataObject Name="" Type="EntityPrecacheItem" Id="7967115773896959231" OwnerId="4580710104844298454">
+						<DataProperty Name="#BaseTypes" Type="String" Value="IPrecacheItem#0|"/>
+						<DataProperty Name="m_blueprint" Type="Object">
+							<DataValue Name="ReflectPBG_EntityProperties">18108683299308472124</DataValue>
+							<!--WinCondition/PrecacheList/EntityPrecacheItem/ReflectPBG_EntityProperties/-->
+							<DataObject Name="" Type="ReflectPBG_EntityProperties" Id="18108683299308472124" OwnerId="7967115773896959231">
+								<DataProperty Name="#BaseTypes" Type="String" Value="PropertyBagGroupReflectReference#0|Provider_PropertyBagGroup#0|"/>
+								<DataProperty Name="m_fileName" Type="String" Value="dc9c718459894f58869e73a73f33effc:building_command_center"/>
+							</DataObject>
+						</DataProperty>
+					</DataObject>
+					<!--WinCondition/PrecacheList/SquadPrecacheItem/-->
+					<DataObject Name="" Type="SquadPrecacheItem" Id="11225618916440384102" OwnerId="4580710104844298454">
+						<DataProperty Name="#BaseTypes" Type="String" Value="IPrecacheItem#0|"/>
+						<DataProperty Name="m_blueprint" Type="Object">
+							<DataValue Name="ReflectPBG_SquadProperties">16525768676686214221</DataValue>
+							<!--WinCondition/PrecacheList/SquadPrecacheItem/ReflectPBG_SquadProperties/-->
+							<DataObject Name="" Type="ReflectPBG_SquadProperties" Id="16525768676686214221" OwnerId="11225618916440384102">
+								<DataProperty Name="#BaseTypes" Type="String" Value="PropertyBagGroupReflectReference#0|Provider_PropertyBagGroup#0|"/>
+								<DataProperty Name="m_fileName" Type="String" Value="dc9c718459894f58869e73a73f33effc:spearzombie"/>
+							</DataObject>
+						</DataProperty>
+					</DataObject>
+				</DataProperty>
 			</DataObject>
 		</DataProperty>
-		<DataProperty Name="m_name" Type="String" Value=""/>
+		<DataProperty Name="m_name" Type="String" Value="ags_endless_survival"/>
 		<DataProperty Name="m_objectiveUnitTypes" Type="Object"/>
 		<DataProperty Name="m_devOnly" Type="Bool" Value="false"/>
 		<DataProperty Name="m_egroupNamePrefixDestroyList" Type="String"/>

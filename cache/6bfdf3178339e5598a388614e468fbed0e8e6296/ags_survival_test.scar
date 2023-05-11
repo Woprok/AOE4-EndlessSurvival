@@ -1,0 +1,210 @@
+---------------------------------------------------------------------------------------------------
+-- Authors:
+-- Relic
+-- Woprock
+--
+-- Description:
+-- Tech demo for survival
+-- Survival wave mechanic implementation details:
+-- Wave starts at 1 and continue until they reach FinalWave.
+-- If FinalWave is set to -1 it will never end, similiarly to this if it' set to 0 it will never start.
+-- Units are spawned randomly from Unit table.
+-- It's using combination of weight and cost to determine wave composition, each playerthrough should be unique.
+-- Difficulty affects cost scaling.
+-- Unit's are spawned to protection player in most cases, after that it will be turned neutral and icon is slapped over them.
+---------------------------------------------------------------------------------------------------
+
+AGS_SURVIVAL_TEST_MODULE = "AGS_SurvivalTest"
+-- Each unit represents single key
+AGS_SURVIVAL_TEST_UNITS = {
+	-- Each spawnable unit follows same definition.
+	-- bp is for blueprint, 
+	-- cost is value of a unit, 
+	-- min_wave is first wave it can be used from
+	-- weight is how much it should favor spawning this unit if possible, higher is better
+	-- key that is used as identifier
+	-- always keep here at least one unit with cost of 1
+	[1] = { bp = "dc9c718459894f58869e73a73f33effc:spearzombie", cost = 1, min_wave = 1, weight = 1 }
+}
+AGS_BP_WAVE_NAME = "AGS_Survival_Wave"
+AGS_SURVIVAL_CHECK_FREQUENCY = 0.125
+AGS_SURVIVAL_SPAWN_FREQUENCY = 5
+AGS_SURVIVAL_SPAWNS_CHECKS = { }
+AGS_SURVIVAL_SPAWNS = { }
+AGS_SURVIVAL_LAST_WAVE = 0
+AGS_SURVIVAL_LAST_WAVE_COST = 0
+AGS_SURVIVAL_FINAL_WAVE = 0
+AGS_SURVIVAL_WAVE_COST_SCALING = 0
+-- Zombies will have the skin of a villager and have 150% the movement speed of one, and 10 damage 
+-- wave 1 starts at 5 mins which consists of 5 zombies, zombies run in from the edges of the map from random directions 
+-- and every 2 mins from then will have another wave (each getting bigger) a timer on screen will show when the next wave is approaching
+AGS_GS_DIFFICULTY_EASY = 1
+AGS_GS_DIFFICULTY_NORMAL = 2
+AGS_GS_DIFFICULTY_HARD = 3
+AGS_GS_DIFFICULTY_NIGHTMARE = 4
+AGS_GS_DIFFICULTY_ABSURD = 5
+AGS_GS_SURVIVAL_WAVE_COUNT_ENDLESS = -1
+AGS_GS_SURVIVAL_WAVE_COUNT_NONE = 0
+AGS_GS_SURVIVAL_WAVE_COUNT_SHORT = 1
+AGS_GS_SURVIVAL_WAVE_COUNT_MEDIUM = 2
+AGS_GS_SURVIVAL_WAVE_COUNT_LONG = 3
+AGS_GS_SURVIVAL_WAVE_COUNT_VERY_LONG = 4
+---------------------------------------------------------------------------------------------------
+-- Delegates:
+---------------------------------------------------------------------------------------------------
+
+Core_RegisterModule(AGS_SURVIVAL_TEST_MODULE)	
+
+function AGS_SurvivalTest_UpdateModuleSettings()
+	AGS_Print("AGS_SurvivalTest_UpdateModuleSettings")
+	--if not AGS_GLOBAL_SETTINGS.PLACEHOLDER.PLACEHOLDER_VALUE then
+	--	Core_UnregisterModule(AGS_SURVIVAL_TEST_MODULE)
+	--end
+	
+	AGS_GLOBAL_SETTINGS.Survival = true
+	AGS_GLOBAL_SETTINGS.SurvivalSettings = {
+		Difficulty = AGS_GS_SURVIVAL_EASY,
+		WaveCount = AGS_GS_SURVIVAL_WAVE_COUNT_SHORT,
+	}
+	AGS_SURVIVAL_FINAL_WAVE = AGS_GLOBAL_SETTINGS.SurvivalSettings.WaveCount
+	AGS_SURVIVAL_WAVE_COST_SCALING = AGS_GLOBAL_SETTINGS.SurvivalSettings.Difficulty
+end
+
+function AGS_SurvivalTest_EarlyInitializations()
+	AGS_Print("AGS_SurvivalTest_EarlyInitializations")
+	--AGS_SurvivalTest_RemoveMapSacredSites()
+	
+end
+
+function AGS_SurvivalTest_PresetExecute()
+	AGS_Print("AGS_SurvivalTest_PresetExecute")
+	AGS_SurvivalTest_SaveSpawnPoints()
+end
+
+function AGS_SurvivalTest_OnPlay()
+	AGS_Print("AGS_SurvivalTest_OnPlay")
+	Rule_AddInterval(AGS_SurvivalTest_OnTimerTick, AGS_SURVIVAL_SPAWN_FREQUENCY)	
+end
+
+function AGS_SurvivalTest_OnGameOver()
+	AGS_Print("AGS_SurvivalTest_OnGameOver")
+	Rule_Remove(AGS_SurvivalTest_OnTimerTick)
+end
+---------------------------------------------------------------------------------------------------
+-- Functions:
+---------------------------------------------------------------------------------------------------
+
+function AGS_SurvivalTest_OnTimerTick()
+	AGS_Print("AGS_SurvivalTest_OnTimerTick-LW", AGS_SURVIVAL_LAST_WAVE)
+	AGS_Print("AGS_SurvivalTest_OnTimerTick-FW", AGS_SURVIVAL_FINAL_WAVE)
+	AGS_Print("AGS_SurvivalTest_OnTimerTick-CS", AGS_SURVIVAL_WAVE_COST_SCALING)
+	
+	if AGS_SURVIVAL_LAST_WAVE == AGS_SURVIVAL_FINAL_WAVE then
+		-- Final wave was already sent.
+		-- This can be safely stopped.
+		Rule_RemoveMe()
+		return
+	end
+	
+	local random_position = World_GetRand(1, #AGS_SURVIVAL_SPAWNS)	
+	AGS_SurvivalTest_NewWave(AGS_SURVIVAL_SPAWNS[random_position].position)
+end
+
+function AGS_SurvivalTest_NewWave(start_position)
+	local player_id = AGS_GetNextHuman().id
+	local target_position =  World_Pos(0,World_GetHeightAt(0,0),0)
+	AGS_SURVIVAL_LAST_WAVE = AGS_SURVIVAL_LAST_WAVE + 1
+	AGS_SURVIVAL_LAST_WAVE_COST = AGS_SURVIVAL_LAST_WAVE_COST + 1 * AGS_SURVIVAL_WAVE_COST_SCALING
+	
+	AGS_SurvivalTest_SpawnWave(player_id, start_position, target_position, AGS_SURVIVAL_LAST_WAVE, AGS_SURVIVAL_LAST_WAVE_COST)
+end
+
+function AGS_SurvivalTest_SpawnWave(player_id, start_position, target_position, current_wave, current_wave_cost)
+	local wave_composition = AGS_SurvivalTest_RandomArmy(current_wave, current_wave_cost)
+	for key, count in pairs(wave_composition) do
+		AGS_SurvivalTest_SpawnUnitGroup(player_id, start_position, target_position, AGS_SURVIVAL_TEST_UNITS[key].bp, count)
+	end
+end
+
+function AGS_SurvivalTest_SaveSpawnPoints()	
+	local all_prefab_sites = EGroup_CreateUnique()
+	World_GetBlueprintEntities(AGS_GetNeutralEntity(AGS_BP_SACRED_SITE), all_prefab_sites)
+	for i = 1, EGroup_CountSpawned(all_prefab_sites) do
+		local eid = EGroup_GetSpawnedEntityAt(all_prefab_sites, i)
+		if AGS_SURVIVAL_SPAWNS_CHECKS[eid] == nil then
+			AGS_SURVIVAL_SPAWNS_CHECKS[eid] = true
+			table.insert(AGS_SURVIVAL_SPAWNS, { entity_id = eid, position = Entity_GetPosition(eid) })
+		end
+	end
+end
+
+---------------------------------------------------------------------------------------------------
+-- Helpers:
+---------------------------------------------------------------------------------------------------
+-- Units are spawned to first human in the game.
+function AGS_SurvivalTest_SpawnUnitGroup(initiator_id, spawn_position, target_position, unit_bp_name, unit_count)
+	local sbp_unit = BP_GetSquadBlueprint(unit_bp_name)
+	local sname = AGS_SGroupName(initiator_id, AGS_BP_WAVE_NAME)		
+	local sgroup = SGroup_CreateIfNotFound(sname)
+	-- Spawn
+	UnitEntry_DeploySquads(initiator_id, sgroup, {{sbp = sbp_unit, numSquads = unit_count}}, spawn_position)
+	
+	-- Transfer & Command
+	Cmd_AttackMove(sgroup, target_position)
+	SGroup_SetWorldOwned(sgroup)
+	-- Icon
+	SGroup_ForEach(sgroup, AGS_Survival_AddIcon)
+	
+	-- Clean
+	SGroup_Destroy(sgroup)
+end
+-- Necessary for neutral units to have icon.
+function AGS_Survival_AddIcon(gid, idx, sid)
+	MapIcon_CreateSquad(sid, "icons\\minimap\\military_route_neutral", 0.15, 1, 1, 1, 1)
+end
+-- Creates army based on cost and weights. Returns key, count table.
+function AGS_SurvivalTest_RandomArmy(max_wave, max_cost)
+	if max_cost < 1 then
+		max_cost = 1
+	end
+	local current_cost = 0
+	-- key of the unit and then count
+	local final_army = { }
+	
+	while current_cost < max_cost do
+		local remaining_cost = max_cost - current_cost
+		local unit_key = AGS_SurvivalTest_GetRandomUnit(max_wave, remaining_cost)
+		current_cost = current_cost + AGS_SURVIVAL_TEST_UNITS[unit_key].cost
+		-- increment or add
+		if final_army[unit_key] ~= nil then
+			final_army[unit_key] = final_army[unit_key] + 1
+		else
+			final_army[unit_key] = 1
+		end
+	end
+	
+	return final_army	
+end
+-- Returns key from unit table and it's cost as that will be immediately used
+function AGS_SurvivalTest_GetRandomUnit(max_wave, max_unit_cost)
+	-- chances
+	local total_weight = 0
+	for key, data in pairs(AGS_SURVIVAL_TEST_UNITS) do 
+		if max_unit_cost <= data.cost and max_wave >= data.min_wave then
+			total_weight = total_weight + data.weight
+		end
+	end
+	-- rng (this must synchronize)
+	local final_weight = World_GetRand(0, total_weight)
+	-- retrieve unit
+	for key, data in pairs(AGS_SURVIVAL_TEST_UNITS) do 
+		if max_unit_cost <= data.cost and max_wave >= data.min_wave then
+			final_weight = final_weight - data.weight
+			if final_weight <= 0 then
+				return key
+			end			
+		end
+	end
+	-- if this failed return unit in the table under key 1
+	return 1
+end

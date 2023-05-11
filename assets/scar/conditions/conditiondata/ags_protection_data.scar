@@ -1,0 +1,65 @@
+---------------------------------------------------------------------------------------------------
+-- Authors:
+-- Relic
+-- Woprock
+--
+-- Description:
+-- Additional data for condition. Imported by appropriate condition.
+---------------------------------------------------------------------------------------------------
+
+AGS_OBJECTIVES_PROTECTION = {
+	reason = WR_CONQUEST,
+	-- "Protect Command Center"
+	title = "$dc9c718459894f58869e73a73f33effc:407", 
+	-- "Your empire has been wiped out."
+	title_lost = "$dc9c718459894f58869e73a73f33effc:405",
+	-- "Your empire survived."
+	title_victory = "$dc9c718459894f58869e73a73f33effc:406",
+	description = Loc_Empty(),
+	icon = "icons\\races\\common\\victory_conditions\\victory_condition_conquest",
+	data_template = "ConquestObjectiveTemplate",
+	data_template_or = "ConquestObjectiveTemplate",
+	priority = OT_Primary,
+	parent = 0,
+	telemetry = "conquestObj",
+	alert = "icons\\event_queue_high_priority_large",
+}
+
+AGS_NOTIFICATIONS_PROTECTION = {
+	-- "%1PLAYER_NAME% wiped out"
+	title = "$dc9c718459894f58869e73a73f33effc:404",
+	sfx = nil,	
+}
+
+AGS_NOTIFICATIONS_PROTECTION_ATTACKED = {
+	-- "Enemy attacking Command Center"
+	self_attacked = "$dc9c718459894f58869e73a73f33effc:402",
+	-- "Enemy attacking %1PLAYER_NAME%'s Command Center"
+	ally_attacked = "$dc9c718459894f58869e73a73f33effc:403",
+	attacked_sfx = "mus_stinger_landmark_building_damaged",
+}
+
+AGS_NOTIFICATIONS_PROTECTION_DESTROYED = {
+	-- "Command Center Wiped out"
+	self_destroyed = "$dc9c718459894f58869e73a73f33effc:408",
+	-- "%1PLAYER_NAME%'s Command Center Wiped Out"
+	ally_destroyed = "$dc9c718459894f58869e73a73f33effc:409",
+	-- "%1PLAYER_NAME%'s Command Center Wiped Out"
+	enemy_destroyed = "$dc9c718459894f58869e73a73f33effc:409",
+	
+	-- "Command Center Wiped out"
+	self_crushed = "$dc9c718459894f58869e73a73f33effc:408",
+	-- "%1PLAYER_NAME%'s Command Center Wiped Out"
+	ally_crushed = "$dc9c718459894f58869e73a73f33effc:409",
+	
+	-- "%1PLAYER_NAME%'s Command Center Wiped Out"
+	self_killed = "$dc9c718459894f58869e73a73f33effc:409",
+	-- "%1PLAYER_NAME%'s Command Center Wiped Out"
+	ally_killed = "$dc9c718459894f58869e73a73f33effc:409",
+	-- "%1PLAYER_NAME%'s Command Center Wiped Out"
+	enemy_killed = "$dc9c718459894f58869e73a73f33effc:409",
+	
+	self_destroyed_sfx = "mus_stinger_players_landmark_destroyed",
+	ally_destroyed_sfx = "mus_stinger_ally_landmark_destroyed",
+	enemy_destroyed_sfx = "mus_stinger_enemy_landmark_destroyed",
+}
