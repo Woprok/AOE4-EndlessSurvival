@@ -44,7 +44,7 @@ AGS_SURVIVAL_WAVES = {
 	SpawnEntityType = AGS_BP_SACRED_SITE,
 	SpawnSquadType = "spearman", -- TODO change this to	AGS_BP_HERO = "hero"
 	NotifyWaveAppeared = true, -- Plays sound and makes a map blip for spawned wave.
-	NotifyWaveAppearedBlip = "general", -- "objective_primary", -- "threat_group",
+	NotifyWaveAppearedBlip = "cta_alarm", -- "threat_group",
 	NotifyWaveAppearedSound = "sfx_campaign_scripted_attack_horn_under_attack_high",
 }
 -- Zombies will have the skin of a villager and have 150% the movement speed of one, and 10 damage 

@@ -220,6 +220,7 @@
 				<enum name="unit_type" value="melee_infantry" List.ItemID="-638515296" List.ParentItemID="-638515296" />
 				<enum name="unit_type" value="find_non_siege_land_military" List.ItemID="1478647624" List.ParentItemID="1478647624" />
 				<enum name="unit_type" value="gaia" List.ItemID="383607165" />
+				<enum name="unit_type" value="hero" List.ItemID="2059856694" />
 			</list>
 			<enum name="weapon_targeting" value="automatic" />
 			<enum_table name="weapon_category_targeting_filter">
