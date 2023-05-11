@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ProjectSettings xmlns:i="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.datacontract.org/2004/07/Essence.Editor.Core">
-	<LastDocumentDirectory>C:\Program Files (x86)\Steam\steamapps\common\Age of Empires IV\cardinal\archives</LastDocumentDirectory>
+	<LastDocumentDirectory>C:\Program Files (x86)\Steam\steamapps\common\Age of Empires IV\engine\archives</LastDocumentDirectory>
 	<LastDocumentType>Script</LastDocumentType>
 	<PluginSettings xmlns:d2p1="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
 		<d2p1:anyType xmlns:d3p1="http://schemas.datacontract.org/2004/07/Essence.Editor.Controls" i:type="d3p1:FileExplorerProjectSettings">
@@ -9,21 +9,16 @@
 					<d2p1:Key>AssetExplorerGeneric</d2p1:Key>
 					<d2p1:Value>
 						<d2p1:string>assets\attrib</d2p1:string>
-						<d2p1:string>assets\locdb\EndlessSurvivalBundle.locdb</d2p1:string>
+						<d2p1:string>assets\locdb</d2p1:string>
 						<d2p1:string>assets\scar\balance</d2p1:string>
 						<d2p1:string>assets\scar\conditions\conditiondata</d2p1:string>
-						<d2p1:string>assets\scar\conditions\ags_annihilation.scar</d2p1:string>
-						<d2p1:string>assets\scar\conditions\ags_conquest.scar</d2p1:string>
 						<d2p1:string>assets\scar\coreconditions</d2p1:string>
-						<d2p1:string>assets\scar\diplomacy\ags_diplomacy.scar</d2p1:string>
-						<d2p1:string>assets\scar\diplomacy\ags_relations.scar</d2p1:string>
+						<d2p1:string>assets\scar\diplomacy</d2p1:string>
 						<d2p1:string>assets\scar\gamemodes</d2p1:string>
 						<d2p1:string>assets\scar\helpers</d2p1:string>
 						<d2p1:string>assets\scar\specials</d2p1:string>
 						<d2p1:string>assets\scar\startconditions</d2p1:string>
 						<d2p1:string>assets\scar\winconditions</d2p1:string>
-						<d2p1:string>assets\scar\ags_cardinal.scar</d2p1:string>
-						<d2p1:string>assets\scar\ags_global_settings.scar</d2p1:string>
 					</d2p1:Value>
 				</d2p1:KeyValueOfstringArrayOfstringty7Ep6D1>
 			</d3p1:ExpandedPaths>
@@ -36,16 +31,16 @@
 	</PluginSettings>
 	<RecentFiles>
 		<History xmlns:d3p1="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
+			<d3p1:string>C:\Program Files (x86)\Steam\steamapps\common\Age of Empires IV\engine\archives\Data.sga</d3p1:string>
+			<d3p1:string>C:\Program Files (x86)\Steam\steamapps\common\Age of Empires IV\cardinal\archives\Data.sga</d3p1:string>
+			<d3p1:string>E:\Mods\Age of Empires IV\AOE4-EndlessSurvivalBundle\assets\scar\conditions\ags_score.scar</d3p1:string>
+			<d3p1:string>E:\Mods\Age of Empires IV\AOE4-EndlessSurvivalBundle\assets\attrib\EndlessSurvivalEnemies.xml</d3p1:string>
+			<d3p1:string>E:\Mods\Age of Empires IV\AOE4-EndlessSurvivalBundle\assets\scar\specials\ags_survival.scar</d3p1:string>
 			<d3p1:string>E:\Mods\Age of Empires IV\AOE4-EndlessSurvivalBundle\assets\scar\diplomacy\ags_relations.scar</d3p1:string>
 			<d3p1:string>E:\Mods\Age of Empires IV\AOE4-EndlessSurvivalBundle\assets\scar\diplomacy\ags_diplomacy.scar</d3p1:string>
 			<d3p1:string>E:\Mods\Age of Empires IV\AOE4-EndlessSurvivalBundle\assets\locdb\EndlessSurvivalBundle.locdb</d3p1:string>
 			<d3p1:string>C:\Users\skval\AppData\Local\Temp\challenge_mission_ottoman.scar</d3p1:string>
 			<d3p1:string>C:\Program Files (x86)\Steam\steamapps\common\Age of Empires IV\cardinal\archives\Scenarios.sga</d3p1:string>
-			<d3p1:string>E:\Mods\Age of Empires IV\AOE4-EndlessSurvivalBundle\assets\scar\conditions\ags_conquest.scar</d3p1:string>
-			<d3p1:string>E:\Mods\Age of Empires IV\AOE4-EndlessSurvivalBundle\assets\scar\conditions\ags_annihilation.scar</d3p1:string>
-			<d3p1:string>E:\Mods\Age of Empires IV\AOE4-EndlessSurvivalBundle\assets\scar\ags_cardinal.scar</d3p1:string>
-			<d3p1:string>E:\Mods\Age of Empires IV\AOE4-EndlessSurvivalBundle\assets\scar\ags_global_settings.scar</d3p1:string>
-			<d3p1:string>E:\Mods\Age of Empires IV\AOE4-EndlessSurvivalBundle\assets\scar\conditions\ags_score.scar</d3p1:string>
 		</History>
 	</RecentFiles>
 </ProjectSettings>

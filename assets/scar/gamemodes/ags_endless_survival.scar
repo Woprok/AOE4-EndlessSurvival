@@ -11,8 +11,11 @@
 
 import("ags_cardinal.scar")
 
-AGS_Testing_Hot_Reload("specials/ags_survival_test.scar")
+AGS_Testing_Hot_Reload("specials/ags_survival.scar")
 AGS_Testing_Hot_Reload("conditions/ags_protection.scar")
+
+AGS_BP_COMMAND_CENTER = "command_center"
+AGS_PROTECTION_ENTITY_BLUEPRINT_TYPE = "dc9c718459894f58869e73a73f33effc:building_command_center"
 ---------------------------------------------------------------------------------------------------
 -- Delegates:
 ---------------------------------------------------------------------------------------------------
@@ -23,15 +26,14 @@ Core_RegisterModule("AGS_Endless_Survival")
 function AGS_Endless_Survival_AdjustSettings()
 	AGS_Print("AGS_Endless_Survival_AdjustSettings")
 
+	-- note adjust is only for nondefined values
+	AGS_GLOBAL_SETTINGS.Survival = true
 	AGS_GLOBAL_SETTINGS.Protection = true
-	AGS_GLOBAL_SETTINGS.ProtectionSettings = {
-		ProtectablesCount = 1, -- at the moment we support only single building
-		ProtectablesType = "building", -- this does nothing
-		IsTeamShared = true, -- Eliminate everyone, this is always on, alternative is not supported yet
-		ShowHealth = true, -- Visual ? TODO
-		ChangeRelations = true, -- Forced peace treaty 		
-	}
-	
+	AGS_GLOBAL_SETTINGS.ProtectionSettings.ProtectablesCount = 1 -- at the moment we support only single building
+	AGS_GLOBAL_SETTINGS.ProtectionSettings.IsTeamShared = true -- Eliminate everyone, this is always on, alternative is not supported yet
+	AGS_GLOBAL_SETTINGS.ProtectionSettings.ChangeRelations = true -- Forced peace treaty 		
+	AGS_GLOBAL_SETTINGS.ProtectionSettings.ProtectableType = AGS_BP_COMMAND_CENTER	
+	AGS_GLOBAL_SETTINGS.ProtectionSettings.ProtectableBlueprint = AGS_PROTECTION_ENTITY_BLUEPRINT_TYPE
 	AGS_GLOBAL_SETTINGS.Tributes = true
 	AGS_GLOBAL_SETTINGS.TributesTaxRate = 0.0
 	AGS_GLOBAL_SETTINGS.Relations = false

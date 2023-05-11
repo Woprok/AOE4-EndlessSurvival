@@ -15,6 +15,14 @@ AGS_TESTING_HOT_RELOAD  = "E:/Mods/Age of Empires IV/AOE4-EndlessSurvivalBundle/
 
 Core_RegisterModule(AGS_TESTING_MODULE)	
 
+--this will never work most likely ? maybe if this was called in hot reload import ?
+--function AGS_Testing_AdjustSettings()
+--	if not AGS_Testing_HasCommandLineOption("dev") then
+--		AGS_GLOBAL_SETTINGS.Debug.Enabled = false
+--		AGS_GLOBAL_SETTINGS.Debug.HotReload = false
+--	end
+--end 
+
 function AGS_Testing_UpdateModuleSettings()
 	AGS_Print("AGS_Testing_UpdateModuleSettings")
 	if not AGS_GLOBAL_SETTINGS.Debug or not AGS_GLOBAL_SETTINGS.Debug.Enabled then

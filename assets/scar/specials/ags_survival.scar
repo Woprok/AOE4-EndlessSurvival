@@ -29,20 +29,22 @@ AGS_SURVIVAL_UNITS = {
 	-- always keep here at least one unit with cost of 1
 	[1] = { bp = "dc9c718459894f58869e73a73f33effc:spearzombie", cost = 1, min_wave = 1, weight = 1 }
 }
-AGS_BP_WAVE_NAME = "AGS_Survival_Wave"
 AGS_SURVIVAL_CHECK_FREQUENCY = 0.5 -- tick is 0.125
 AGS_SURVIVAL_SPAWN_FREQUENCY = 5
 AGS_SURVIVAL_SPAWNS_CHECKS = { }
 AGS_SURVIVAL_SPAWNS = { }
 AGS_SURVIVAL_WAVES = {
+	NameScheme = "AGS_Survival_Wave",
 	LastWave = 0,
 	LastWaveCost = 0,
 	FinalWave = 0,
 	Difficulty = 0,
-	DifficultyScale = 1,
+	DifficultyScale = 1, -- keep as integer
+	MultiplayerScale = 0, -- Additional bonus is applied only to main wave.
+	MultiplayerAdditionalWaves = 0, -- Additional wave count.
 	IsFinished = false,
 	SpawnEntityType = AGS_BP_SACRED_SITE,
-	SpawnSquadType = "spearman", -- TODO change this to	AGS_BP_HERO = "hero"
+	SpawnSquadType = "hero",
 	NotifyWaveAppeared = true, -- Plays sound and makes a map blip for spawned wave.
 	NotifyWaveAppearedBlip = "cta_alarm", -- "threat_group",
 	NotifyWaveAppearedSound = "sfx_campaign_scripted_attack_horn_under_attack_high",
@@ -50,18 +52,6 @@ AGS_SURVIVAL_WAVES = {
 -- Zombies will have the skin of a villager and have 150% the movement speed of one, and 10 damage 
 -- wave 1 starts at 5 mins which consists of 5 zombies, zombies run in from the edges of the map from random directions 
 -- and every 2 mins from then will have another wave (each getting bigger) a timer on screen will show when the next wave is approaching
-AGS_GS_DIFFICULTY_EASY = 1
-AGS_GS_DIFFICULTY_NORMAL = 2
-AGS_GS_DIFFICULTY_HARD = 3
-AGS_GS_DIFFICULTY_NIGHTMARE = 5
-AGS_GS_DIFFICULTY_ABSURD = 10
-AGS_GS_SURVIVAL_WAVE_COUNT_ENDLESS = -1
-AGS_GS_SURVIVAL_WAVE_COUNT_NONE = 0
-AGS_GS_SURVIVAL_WAVE_COUNT_VERY_SHORT = 5
-AGS_GS_SURVIVAL_WAVE_COUNT_SHORT = 25
-AGS_GS_SURVIVAL_WAVE_COUNT_MEDIUM = 50
-AGS_GS_SURVIVAL_WAVE_COUNT_LONG = 75
-AGS_GS_SURVIVAL_WAVE_COUNT_VERY_LONG = 100
 ---------------------------------------------------------------------------------------------------
 -- Delegates:
 ---------------------------------------------------------------------------------------------------
@@ -70,23 +60,15 @@ Core_RegisterModule(AGS_SURVIVAL_MODULE)
 
 function AGS_Survival_UpdateModuleSettings()
 	AGS_Print("AGS_Survival_UpdateModuleSettings")
-	--if not AGS_GLOBAL_SETTINGS.PLACEHOLDER.PLACEHOLDER_VALUE then
-	--	Core_UnregisterModule(AGS_SURVIVAL_MODULE)
-	--end
-	-- This will determine the difficulty from options.
-	AGS_GLOBAL_SETTINGS.Survival = true
-	AGS_GLOBAL_SETTINGS.SurvivalSettings = {
-		Difficulty = AGS_GS_DIFFICULTY_EASY,
-		WaveCount = AGS_GS_SURVIVAL_WAVE_COUNT_VERY_SHORT,
-	}
-	-- Applies type and difficulty settings
-	AGS_SURVIVAL_WAVES.FinalWave = AGS_GLOBAL_SETTINGS.SurvivalSettings.WaveCount
-	AGS_SURVIVAL_WAVES.Difficulty = AGS_GLOBAL_SETTINGS.SurvivalSettings.Difficulty
-	AGS_SURVIVAL_WAVES.SpawnEntity = AGS_BP_SACRED_SITE
+	if not AGS_GLOBAL_SETTINGS.Survival then
+		Core_UnregisterModule(AGS_SURVIVAL_MODULE)
+	end
 end
 
 function AGS_Survival_EarlyInitializations()
-	AGS_Print("AGS_Survival_EarlyInitializations")	
+	AGS_Print("AGS_Survival_EarlyInitializations")
+	-- Applies type and difficulty settings
+	AGS_Survival_UpdateSurvivalWavesSettings()	
 end
 
 function AGS_Survival_PresetExecute()
@@ -122,21 +104,20 @@ function AGS_Survival_OnTimerTick()
 		Rule_AddInterval(AGS_Survival_CheckWavesAlive, AGS_SURVIVAL_CHECK_FREQUENCY)
 		return
 	end
-	-- Select random position to spawn wave
-	local random_position = World_GetRand(1, #AGS_SURVIVAL_SPAWNS)	
-	AGS_Survival_NewWave(AGS_SURVIVAL_SPAWNS[random_position].position)
+	AGS_Survival_StartNewWaveGroup()
 end
 
 function AGS_Survival_CheckWavesAlive()
 	local are_waves_dead = false
 		
-	local sname = AGS_BP_WAVE_NAME		
-	local sgroup = SGroup_CreateIfNotFound(sname)
-	World_GetAllNeutralSquads(sgroup)
+	local ename = AGS_SURVIVAL_WAVES.NameScheme		
+	local egroup = EGroup_CreateIfNotFound(ename)
+	World_GetAllNeutralEntities(egroup)
 	-- Filter and keep only surviving enemies
-	SGroup_Filter(sgroup, AGS_SURVIVAL_WAVES.SpawnSquadType, FILTER_KEEP)
-	SGroup_FilterSpawned(sgroup, FILTER_KEEP)
-	local current = SGroup_Count(sgroup)
+	EGroup_FilterSquads(egroup, FILTER_KEEP) -- originally intended to use SGroup_FilterSpawned
+	EGroup_Filter(egroup, AGS_SURVIVAL_WAVES.SpawnSquadType, FILTER_KEEP)
+	local current = EGroup_Count(egroup)
+	--AGS_Print("AGS_Survival_CheckWavesAlive-Final", current)
 	
 	-- All waves are supposed to be dead based on this ?
 	if current == 0 then
@@ -144,24 +125,40 @@ function AGS_Survival_CheckWavesAlive()
 	end
 	
 	if AGS_SURVIVAL_WAVES.IsFinished and are_waves_dead then
+		AGS_Print("AGS_Survival_CheckWavesAlive-AllDead")
 		Core_CallDelegateFunctions("SurvivalEnded")
 		Rule_RemoveMe()		
 	end
 	
-	SGroup_Destroy(sgroup)
+	EGroup_Destroy(egroup)
 end
 ---------------------------------------------------------------------------------------------------
 -- Functions:
 ---------------------------------------------------------------------------------------------------
-
-function AGS_Survival_NewWave(start_position)
+-- This spawns waves with respect to multiplayer modifiers.
+function AGS_Survival_StartNewWaveGroup()
 	local player_id = AGS_GetNextHuman().id
 	local target_position =  World_Pos(0,World_GetHeightAt(0,0),0)
 	
-	local new_wave_order = AGS_Survival_CalculateWave()
-	local new_wave_cost = AGS_Survival_CalculateCost()
+	-- Base calculation
+	local new_wave_order = AGS_Survival_AdvanceWave()
+	local new_wave_cost = AGS_Survival_UpdateWaveCost()
+	-- Follow with multiplayer adjustment
+	local main_wave_cost = new_wave_cost + math.floor(new_wave_cost * AGS_SURVIVAL_WAVES.MultiplayerScale)
+	local additional_waves = AGS_SURVIVAL_WAVES.MultiplayerAdditionalWaves
 	
-	AGS_Survival_SpawnWave(player_id, start_position, target_position, new_wave_order, new_wave_cost)
+	-- Select random position to spawn main wave
+	local random_position = World_GetRand(1, #AGS_SURVIVAL_SPAWNS)	
+	local start_position = AGS_SURVIVAL_SPAWNS[random_position].position	
+	AGS_Survival_SpawnWave(player_id, start_position, target_position, new_wave_order, main_wave_cost)
+	
+	-- Additional waves after the main one
+	for i=1, additional_waves do 
+		-- Update to random position and spawn
+		random_position = World_GetRand(1, #AGS_SURVIVAL_SPAWNS)	
+		start_position = AGS_SURVIVAL_SPAWNS[random_position].position
+		AGS_Survival_SpawnWave(player_id, start_position, target_position, new_wave_order, new_wave_cost)
+	end
 end
 -- Complete creation of new wave.
 function AGS_Survival_SpawnWave(player_id, start_position, target_position, current_wave, current_wave_cost)
@@ -186,28 +183,64 @@ end
 ---------------------------------------------------------------------------------------------------
 -- Helpers:
 ---------------------------------------------------------------------------------------------------
--- Determines order of the next wave.
-function AGS_Survival_CalculateWave()
+	
+-- Determines order of the next wave and updates saved value to it.
+function AGS_Survival_AdvanceWave()
 	AGS_SURVIVAL_WAVES.LastWave = AGS_SURVIVAL_WAVES.LastWave + 1
 	return AGS_SURVIVAL_WAVES.LastWave 
 end
--- Determines cost of the next wave.
-function AGS_Survival_CalculateCost()
+	
+-- Determines cost of the next wave and updates saved value to it.
+function AGS_Survival_UpdateWaveCost()
 	AGS_SURVIVAL_WAVES.LastWaveCost = AGS_SURVIVAL_WAVES.LastWaveCost + AGS_SURVIVAL_WAVES.DifficultyScale * AGS_SURVIVAL_WAVES.Difficulty
 	return AGS_SURVIVAL_WAVES.LastWaveCost
 end
+	
+-- Determines multiplayer settings.
+function AGS_Survival_UpdateSurvivalWavesSettings()
+	AGS_Print("AGS_Survival_UpdateSurvivalWavesSettings-TakenSettings", AGS_GLOBAL_SETTINGS.SurvivalSettings)
+		
+	AGS_SURVIVAL_WAVES.FinalWave = AGS_GLOBAL_SETTINGS.SurvivalSettings.WaveCount
+	AGS_SURVIVAL_WAVES.Difficulty = AGS_GLOBAL_SETTINGS.SurvivalSettings.Difficulty
+	AGS_SURVIVAL_WAVES.SpawnEntity = AGS_BP_SACRED_SITE
+	AGS_SURVIVAL_WAVES.PlayerCount = World_GetPlayerCount()
+		
+	AGS_Survival_UpdateMultiplayerAdjustments(AGS_GLOBAL_SETTINGS.SurvivalSettings.MultiplayerAdjustment)
+		
+	AGS_Print("AGS_Survival_UpdateSurvivalWavesSettings-FinalWaves", AGS_SURVIVAL_WAVES)
+end
 
+-- Additional bonus is applied only to main wave. 
+-- Additional wave count is determined by 100% overflow.
+-- For 0 it's not doing anything. For 25 - 100 it's using only additional players. 101+ for all players.
+function AGS_Survival_UpdateMultiplayerAdjustments(adjustment)
+	local for_group = 0
+	if adjustment == 0 then
+		for_group = 0 
+	elseif adjustment >= 25 and adjustment <= 100 then 
+		for_group = adjustment * (AGS_SURVIVAL_WAVES.PlayerCount - 1)
+	elseif adjustment > 100 then 
+		for_group = adjustment * AGS_SURVIVAL_WAVES.PlayerCount
+	end
+	local main_wave_scale = (for_group % 100) / 100
+	local add_wave_count = math.floor(for_group / 100)
+	-- Additional bonus is applied only to main wave. 
+	AGS_SURVIVAL_WAVES.MultiplayerScale = main_wave_scale
+	-- Additional wave count is determined by 100% overflow.
+	AGS_SURVIVAL_WAVES.MultiplayerAdditionalWaves = add_wave_count 
+end
+	
+-- Visual and sound clue about the wave appearance.
 function AGS_Survival_WaveAppearedWarning(wave_start_position)
 	if AGS_SURVIVAL_WAVES.NotifyWaveAppeared then
 		UI_CreateMinimapBlip(wave_start_position, 5, AGS_SURVIVAL_WAVES.NotifyWaveAppearedBlip)
 		Sound_Play2D(AGS_SURVIVAL_WAVES.NotifyWaveAppearedSound)
 	end
 end
-
 -- Units are spawned to first human in the game.
 function AGS_Survival_SpawnUnitGroup(initiator_id, spawn_position, target_position, unit_bp_name, unit_count)
 	local sbp_unit = BP_GetSquadBlueprint(unit_bp_name)
-	local sname = AGS_SGroupName(initiator_id, AGS_BP_WAVE_NAME)		
+	local sname = AGS_SGroupName(initiator_id, AGS_SURVIVAL_WAVES.NameScheme)		
 	local sgroup = SGroup_CreateIfNotFound(sname)
 	-- Spawn
 	UnitEntry_DeploySquads(initiator_id, sgroup, {{sbp = sbp_unit, numSquads = unit_count}}, spawn_position)

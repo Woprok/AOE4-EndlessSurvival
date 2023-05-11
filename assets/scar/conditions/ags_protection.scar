@@ -17,30 +17,27 @@ AGS_PROTECTION_OBJECTIVE = nil
 AGS_PROTECTION_ACTIVE = true
 AGS_PROTECTION_STRUCTURES_REQUIRED = 1
 AGS_PROTECTION_TICK_WAIT = 0.25 -- 0.125 is a single tick
-AGS_PROTECTION_ENTITY_BLUEPRINT_TYPE = "dc9c718459894f58869e73a73f33effc:building_command_center"
 AGS_PROTECTION_PROTECTABLES_OWNER = nil
 AGS_PROTECTION_PROTECTABLES = {}
-AGS_BP_COMMAND_CENTER = "command_center"
 ---------------------------------------------------------------------------------------------------
 -- Delegates:
 ---------------------------------------------------------------------------------------------------
 
 Core_RegisterModule(AGS_PROTECTION_MODULE)
 
-function AGS_Protection_AdjustSettings()
-	AGS_Print("AGS_Protection_AdjustSettings")
-	if AGS_GLOBAL_SETTINGS.Protection then
-		-- Check if we have access to blueprint ?
-		AGS_GLOBAL_SETTINGS.Protection = EBP_Exists(AGS_PROTECTION_ENTITY_BLUEPRINT_TYPE)
-		AGS_Print("AGS_Protection_AdjustSettings-Current", AGS_GLOBAL_SETTINGS.Protection)
-	end
-end
-
 function AGS_Protection_UpdateModuleSettings()
 	AGS_Print("AGS_Protection_UpdateModuleSettings")
 	if not AGS_GLOBAL_SETTINGS.Protection then
 		Core_UnregisterModule(AGS_PROTECTION_MODULE)
+		return
 	end
+	
+	local does_custom_ebp_exists = EBP_Exists(AGS_GLOBAL_SETTINGS.ProtectionSettings.ProtectableBlueprint)
+	AGS_Print("AGS_Protection_UpdateModuleSettings-EBP_RESULT", does_custom_ebp_exists)
+	if not does_custom_ebp_exists then
+		Core_UnregisterModule(AGS_PROTECTION_MODULE)
+	end
+	
 end
 
 function AGS_Protection_PresetExecute()
@@ -257,14 +254,16 @@ function AGS_Protection_CreateProtectedEntity()
 	end	
 	AGS_PROTECTION_PROTECTABLES_OWNER = next_owner.id
 	-- Continue to spawn, step by step
-	local ebp_building = BP_GetEntityBlueprint(AGS_PROTECTION_ENTITY_BLUEPRINT_TYPE)
+	local ebp = AGS_GLOBAL_SETTINGS.ProtectionSettings.ProtectableBlueprint
+	local ebp_building = BP_GetEntityBlueprint(ebp)
 	local owner_id = next_owner.id		
-	local ename = AGS_EGroupName(owner_id, AGS_BP_COMMAND_CENTER)
+	local name = AGS_GLOBAL_SETTINGS.ProtectionSettings.ProtectableType
+	local ename = AGS_EGroupName(owner_id, name)
 	local egroup = EGroup_CreateIfNotFound(ename)
 	local center = World_Pos(0, World_GetHeightAt(0, 0), 0)		
 	local center_facing = World_Pos(0, World_GetHeightAt(0, 5), 5)	
-	
-	Util_CreateEntities(owner_id, egroup, ebp_building, center, 1, center_facing, false, false)
+	local count = AGS_GLOBAL_SETTINGS.ProtectionSettings.ProtectablesCount
+	Util_CreateEntities(owner_id, egroup, ebp_building, center, count, center_facing, false, false)
 	
 	AGS_Protection_InitializeProtectables(egroup)
 	

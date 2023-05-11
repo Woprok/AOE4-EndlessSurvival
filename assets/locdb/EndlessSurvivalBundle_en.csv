@@ -396,7 +396,7 @@
 395,,,,KOTH,,King of the Hill AGS
 396,,,,KOTH,,"Provides quick way to play King of the Hill on any map.\n\nHelp, feedback, bug reports and contribution to mode can be done at:\nhttps://github.com/search?q=AOE4-AdvancedGameSettings"
 397,,,,,,Survival
-398,,,,,,How long can you hold before succumbing to endless hordes
+398,,,,,,"How long can you hold before succumbing to endless hordes?\nNote: Endless is optional, you can play only few waves if you want.\nMaps that contain islands are not supported as there needs to be land access to defense position.\nYou have to use tuning pack that is part of this mod, otherwise the mod will crash as it needs custom units and building to work properly."
 399,,,extra_text,,,Monster Infantry
 400,,,help_text,,,Monster provides only death.
 401,,,screen_name,,,Monster
@@ -411,3 +411,34 @@
 410,,,extra_text,,,Command Center
 411,,,help_text,,,Last Bastion of the Humanity in their fight against the monsters. Protect this for as long as you can against the endless hordes. Are we actually sure they are monsters ? They kind of look like angry peasants with lot of dangerous tools.
 412,,,screen_name,,,Command Center
+413,,,,,,Survival Settings
+414,,,,,,Difficulty
+415,,,,,,Changes how strong will each wave be.
+416,,,,,,Wave Count
+417,,,,,,Allows you to select how long do you want to play.
+418,,,,,,Absurd
+419,,,,,,Nightmare
+420,,,,,,Hard
+421,,,,,,Easy
+422,,,,,,Normal
+423,,,,,,25 waves
+424,,,,,,50 waves
+425,,,,,,75 waves
+426,,,,,,100 waves
+427,,,,,,Endless
+428,,,,,,Survival Map Settings
+429,,,,,,Sacred Sites
+430,,,,,,Enemy Spawn Points
+431,,,,,,Determines where should enemy units be spawned. Sacred Sites will spawn all waves at one of the sacred site.\nSettlements will spawn all waves at one of the settlements.\nMap Border will use any available position along the border.\nMap Center always spawns everything in the middle.
+432,,,,,,Settlements
+433,,,,,,Map Border
+434,,,,,,Map Center
+435,,,,,,Player Defense Point
+436,,,,,,Defines where will building used by enemies as target be located. Loosing the building will result in game over.
+437,,,,,,Center of the Map
+438,,,,,,Multiplayer Adjustment
+439,,,,,,"Difficulty will be increased based on player count.\nAt 25% each additional player over the first will increase wave size by 25%.\nAt 100% each additional player will add simultaneously spawned wave.\n125%, 150%, 175% and 200% will also apply to first player. So with 8 player and 200% you will end up with each wave being 16."
+440,,,,,,25%
+441,,,,,,75%
+442,,,,,,125%
+443,,,,,,175%

@@ -68,6 +68,27 @@ AGS_GS_COLOR_PURPLE = 6 -- Purple Mimosa
 AGS_GS_COLOR_ORANGE = 7 -- Blaze Orange
 AGS_GS_COLOR_PINK = 8 -- Hot Pink
 AGS_GS_COLOR_GREY = 9 -- Monsoon/Natural Grey
+-- Survival Difficulty
+AGS_GS_DIFFICULTY_EASY = 1
+AGS_GS_DIFFICULTY_NORMAL = 2
+AGS_GS_DIFFICULTY_HARD = 3
+AGS_GS_DIFFICULTY_NIGHTMARE = 5
+AGS_GS_DIFFICULTY_ABSURD = 10
+-- Survival Length
+AGS_GS_SURVIVAL_WAVE_COUNT_ENDLESS = -1
+AGS_GS_SURVIVAL_WAVE_COUNT_NONE = 0
+AGS_GS_SURVIVAL_WAVE_COUNT_VERY_SHORT = 5
+AGS_GS_SURVIVAL_WAVE_COUNT_SHORT = 25
+AGS_GS_SURVIVAL_WAVE_COUNT_MEDIUM = 50
+AGS_GS_SURVIVAL_WAVE_COUNT_LONG = 75
+AGS_GS_SURVIVAL_WAVE_COUNT_VERY_LONG = 100
+-- Survival Enemy Spawn Point
+AGS_GS_ENEMY_SPAWN_SACRED_SITE = 1
+AGS_GS_ENEMY_SPAWN_SETTLEMENTS = 2
+AGS_GS_ENEMY_SPAWN_MAP_BORDER = 3
+AGS_GS_ENEMY_SPAWN_MAP_CENTER = 4
+-- Protection Player Defense Point
+AGS_GS_PLAYER_DEFENSE_POINT_CENTER = 1
 ---------------------------------------------------------------------------------------------------
 -- Contains current local player dynamically maintaned whole game. 
 -- Local player should never change. And be ready after Initialization Phase.
@@ -201,6 +222,24 @@ AGS_GLOBAL_SETTINGS = {
 		HotReload = true, -- undefined
 	},
 	IsSandBox = false, -- disables win caused Ann,Elim or Surr. Requires other condition to always handle it.
+
+	-- this belongs to survival mod
+	Protection = false, -- undefined
+	ProtectionSettings = {
+		ProtectablesCount = 1, 
+		IsTeamShared = true, 
+		ChangeRelations = true, 
+		ProtectableType = AGS_BP_KEEP, -- this needs to be overwritten for use
+		ProtectableBlueprint = AGS_BP_KEEP, -- this needs to be overwritten for use	
+		PlayerDefensePoint = AGS_GS_PLAYER_DEFENSE_POINT_CENTER,
+	},
+	Survival = false, -- undefined
+	SurvivalSettings = { -- these are defined
+		Difficulty = AGS_GS_DIFFICULTY_EASY,
+		WaveCount = AGS_GS_SURVIVAL_WAVE_COUNT_VERY_SHORT,
+		EnemySpawnPoint = AGS_GS_ENEMY_SPAWN_SACRED_SITE,
+		MultiplayerAdjustment = 0,
+	},	
 }
 
 ---------------------------------------------------------------------------------------------------
@@ -246,6 +285,10 @@ function AGS_GlobalSettings_SetupSettings(options)
 	
 	if options.section_outer_handicap_settings then
 		AGS_GlobalSettings_DefineHandicapSettings(options.section_outer_handicap_settings)
+	end
+	
+	if options.section_inner_survival_settings then
+		AGS_GlobalSettings_DefineSurvivalSettings(options.section_inner_survival_settings)
 	end
 end
 
@@ -482,9 +525,98 @@ function AGS_GlobalSettings_DefineHandicapSettings(category)
 	AGS_GlobalSettings_SetSlotHandicaps(category)
 end
 	
+function AGS_GlobalSettings_DefineSurvivalSettings(category)
+	if category.option_survival_setting_difficulty ~= nil then
+		AGS_GlobalSettings_SetSurvivalDifficulty(category.option_survival_setting_difficulty)
+	end
+	if category.option_survival_setting_waves ~= nil then
+		AGS_GlobalSettings_SetSurvivalWaves(category.option_survival_setting_waves)
+	end
+	if category.option_survival_setting_multiplayer_adjustment ~= nil then
+		AGS_GlobalSettings_SeSurvivalMultiplayerAdjustment(category.option_survival_setting_multiplayer_adjustment)
+	end
+end
+
+function AGS_GlobalSettings_DefineSurvivalMapSettings(category)
+	if category.option_survival_map_setting_enemy_spawn_point ~= nil then
+		AGS_GlobalSettings_SetEnemySpawnPoint(category.option_survival_map_setting_enemy_spawn_point)
+	end
+	if category.option_survival_map_setting_player_defense_point ~= nil then
+		AGS_GlobalSettings_SetPlayerDefensePoint(category.option_survival_map_setting_player_defense_point)
+	end
+end
+
 ---------------------------------------------------------------------------------------------------
 -- Assignment Functions:
 ---------------------------------------------------------------------------------------------------
+
+function AGS_GlobalSettings_SeSurvivalMultiplayerAdjustment(multiplayer_adjustment)
+	if multiplayer_adjustment.enum_value == multiplayer_adjustment.enum_items.multiplayer_adjustment_none then
+		AGS_GLOBAL_SETTINGS.SurvivalSettings.MultiplayerAdjustment = 0
+	elseif multiplayer_adjustment.enum_value == multiplayer_adjustment.enum_items.multiplayer_adjustment_25 then
+		AGS_GLOBAL_SETTINGS.SurvivalSettings.MultiplayerAdjustment = 25
+	elseif multiplayer_adjustment.enum_value == multiplayer_adjustment.enum_items.multiplayer_adjustment_50 then
+		AGS_GLOBAL_SETTINGS.SurvivalSettings.MultiplayerAdjustment = 50
+	elseif multiplayer_adjustment.enum_value == multiplayer_adjustment.enum_items.multiplayer_adjustment_75 then
+		AGS_GLOBAL_SETTINGS.SurvivalSettings.MultiplayerAdjustment = 75
+	elseif multiplayer_adjustment.enum_value == multiplayer_adjustment.enum_items.multiplayer_adjustment_100 then
+		AGS_GLOBAL_SETTINGS.SurvivalSettings.MultiplayerAdjustment = 100
+	elseif multiplayer_adjustment.enum_value == multiplayer_adjustment.enum_items.multiplayer_adjustment_125 then
+		AGS_GLOBAL_SETTINGS.SurvivalSettings.MultiplayerAdjustment = 125
+	elseif multiplayer_adjustment.enum_value == multiplayer_adjustment.enum_items.multiplayer_adjustment_150 then
+		AGS_GLOBAL_SETTINGS.SurvivalSettings.MultiplayerAdjustment = 150		
+	elseif multiplayer_adjustment.enum_value == multiplayer_adjustment.enum_items.multiplayer_adjustment_175 then
+		AGS_GLOBAL_SETTINGS.SurvivalSettings.MultiplayerAdjustment = 175
+	elseif multiplayer_adjustment.enum_value == multiplayer_adjustment.enum_items.multiplayer_adjustment_200 then
+		AGS_GLOBAL_SETTINGS.SurvivalSettings.MultiplayerAdjustment = 200
+	end
+end
+
+function AGS_GlobalSettings_SetEnemySpawnPoint(player_defense_point)
+	if player_defense_point.enum_value == player_defense_point.enum_items.defense_point_center then
+		AGS_GLOBAL_SETTINGS.ProtectionSettings.PlayerDefensePoint = AGS_GS_PLAYER_DEFENSE_POINT_CENTER
+	end
+end
+
+function AGS_GlobalSettings_SetEnemySpawnPoint(enemy_spawn_point)
+	if enemy_spawn_point.enum_value == enemy_spawn_point.enum_items.spawn_point_sacred_sites then
+		AGS_GLOBAL_SETTINGS.SurvivalSettings.EnemySpawnPoint = AGS_GS_ENEMY_SPAWN_SACRED_SITE
+	elseif enemy_spawn_point.enum_value == enemy_spawn_point.enum_items.spawn_point_settlements then
+		AGS_GLOBAL_SETTINGS.SurvivalSettings.EnemySpawnPoint = AGS_GS_ENEMY_SPAWN_SETTLEMENTS
+	elseif enemy_spawn_point.enum_value == enemy_spawn_point.enum_items.spawn_point_map_border then
+		AGS_GLOBAL_SETTINGS.SurvivalSettings.EnemySpawnPoint = AGS_GS_ENEMY_SPAWN_MAP_BORDER
+	elseif enemy_spawn_point.enum_value == enemy_spawn_point.enum_items.spawn_point_map_center then
+		AGS_GLOBAL_SETTINGS.SurvivalSettings.EnemySpawnPoint = AGS_GS_ENEMY_SPAWN_MAP_CENTER
+	end
+end
+
+function AGS_GlobalSettings_SetSurvivalDifficulty(difficulty)
+	if difficulty.enum_value == difficulty.enum_items.difficulty_easy then
+		AGS_GLOBAL_SETTINGS.SurvivalSettings.Difficulty = AGS_GS_DIFFICULTY_EASY
+	elseif difficulty.enum_value == difficulty.enum_items.difficulty_normal then
+		AGS_GLOBAL_SETTINGS.SurvivalSettings.Difficulty = AGS_GS_DIFFICULTY_NORMAL
+	elseif difficulty.enum_value == difficulty.enum_items.difficulty_hard then
+		AGS_GLOBAL_SETTINGS.SurvivalSettings.Difficulty = AGS_GS_DIFFICULTY_HARD
+	elseif difficulty.enum_value == difficulty.enum_items.difficulty_nightmare then
+		AGS_GLOBAL_SETTINGS.SurvivalSettings.Difficulty = AGS_GS_DIFFICULTY_NIGHTMARE
+	elseif difficulty.enum_value == difficulty.enum_items.difficulty_absurd then
+		AGS_GLOBAL_SETTINGS.SurvivalSettings.Difficulty = AGS_GS_DIFFICULTY_ABSURD
+	end
+end
+
+function AGS_GlobalSettings_SetSurvivalWaves(waves)
+	if waves.enum_value == waves.enum_items.waves_short then
+		AGS_GLOBAL_SETTINGS.SurvivalSettings.WaveCount = AGS_GS_SURVIVAL_WAVE_COUNT_SHORT
+	elseif waves.enum_value == waves.enum_items.waves_medium then
+		AGS_GLOBAL_SETTINGS.SurvivalSettings.WaveCount = AGS_GS_SURVIVAL_WAVE_COUNT_MEDIUM
+	elseif waves.enum_value == waves.enum_items.waves_long then
+		AGS_GLOBAL_SETTINGS.SurvivalSettings.WaveCount = AGS_GS_SURVIVAL_WAVE_COUNT_LONG
+	elseif waves.enum_value == waves.enum_items.waves_very_long then
+		AGS_GLOBAL_SETTINGS.SurvivalSettings.WaveCount = AGS_GS_SURVIVAL_WAVE_COUNT_VERY_LONG
+	elseif waves.enum_value == waves.enum_items.waves_endless then
+		AGS_GLOBAL_SETTINGS.SurvivalSettings.WaveCount = AGS_GS_SURVIVAL_WAVE_COUNT_ENDLESS
+	end
+end
 
 function AGS_GlobalSettings_SetHandicapType(handicap_type)
 	if handicap_type.enum_value == handicap_type.enum_items.handicap_type_none then
