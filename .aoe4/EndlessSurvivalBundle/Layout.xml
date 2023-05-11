@@ -22,7 +22,7 @@
             <LayoutDocument Title="ags_treaty.scar" ContentId="FileName|Script|assets\scar\conditions\ags_treaty.scar" ToolTip="E:\Mods\Age of Empires IV\AOE4-EndlessSurvivalBundle\assets\scar\conditions\ags_treaty.scar" LastActivationTimeStamp="05/11/2023 10:43:54" />
             <LayoutDocument Title="ags_annihilation.scar" ContentId="FileName|Script|assets\scar\conditions\ags_annihilation.scar" ToolTip="E:\Mods\Age of Empires IV\AOE4-EndlessSurvivalBundle\assets\scar\conditions\ags_annihilation.scar" LastActivationTimeStamp="05/11/2023 13:22:29" />
             <LayoutDocument Title="ebps" ContentId="Category|ebps" LastActivationTimeStamp="05/11/2023 13:39:03" />
-            <LayoutDocument Title="ags_relations.scar*" IsSelected="True" IsLastFocusedDocument="True" ContentId="FileName|Script|assets\scar\diplomacy\ags_relations.scar" ToolTip="E:\Mods\Age of Empires IV\AOE4-EndlessSurvivalBundle\assets\scar\diplomacy\ags_relations.scar" LastActivationTimeStamp="05/11/2023 14:26:54" />
+            <LayoutDocument Title="ags_relations.scar" IsSelected="True" IsLastFocusedDocument="True" ContentId="FileName|Script|assets\scar\diplomacy\ags_relations.scar" ToolTip="E:\Mods\Age of Empires IV\AOE4-EndlessSurvivalBundle\assets\scar\diplomacy\ags_relations.scar" LastActivationTimeStamp="05/11/2023 14:26:54" />
           </LayoutDocumentPane>
         </LayoutDocumentPaneGroup>
       </LayoutPanel>
