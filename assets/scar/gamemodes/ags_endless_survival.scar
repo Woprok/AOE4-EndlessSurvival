@@ -11,8 +11,10 @@
 
 import("ags_cardinal.scar")
 
-AGS_Testing_Hot_Reload("specials/ags_survival.scar")
-AGS_Testing_Hot_Reload("conditions/ags_protection.scar")
+--AGS_Testing_Hot_Reload("specials/ags_survival.scar")
+--AGS_Testing_Hot_Reload("conditions/ags_protection.scar")
+import("specials/ags_survival.scar")
+import("conditions/ags_protection.scar")
 
 AGS_BP_COMMAND_CENTER = "command_center"
 AGS_PROTECTION_ENTITY_BLUEPRINT_TYPE = "dc9c718459894f58869e73a73f33effc:building_command_center"

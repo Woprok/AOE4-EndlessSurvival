@@ -132,7 +132,7 @@ import("gameplay/ags_team_vision.scar")
 -- Wrapper around all default match options, that will have minimal changes done to them.
 import("specials/ags_utilities.scar")
 -- Special container for testing and unfinished functionality.
-import("specials/ags_testing.scar")
+--import("specials/ags_testing.scar")
 -- Additional UI elements
 import("specials/ags_match_ui.scar")
 -- Observer UI

@@ -21,7 +21,7 @@ AGS_OBJECTIVES_PROTECTION = {
 	data_template_or = "ConquestObjectiveTemplate",
 	priority = OT_Primary,
 	parent = 0,
-	telemetry = "conquestObj",
+	telemetry = "survivalObj",
 	alert = "icons\\event_queue_high_priority_large",
 }
 

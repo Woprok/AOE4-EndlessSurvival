@@ -1,0 +1,4 @@
+<instance version="4" description="Needed by campaign data split - do not delete. Use the parent pbg (building_defense_wall_gate_sul) for non-campaign modes." template="ebps">
+	<uniqueid name="pbgid" value="203944" />
+	<instance_reference name="parent_pbg" value="ebps\races\sultanate\buildings\building_defense_wall_sul\building_defense_wall_gate_sul" mod="dc9c718459894f58869e73a73f33effc" />
+</instance>

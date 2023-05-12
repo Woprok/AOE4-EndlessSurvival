@@ -1,0 +1,19 @@
+<instance version="4" description="" template="ebps">
+	<list name="extensions">
+		<template_reference name="exts" value="ebpextensions\health_ext" List.ItemID="-1930986963" List.ParentItemID="-1930986963">
+			<float name="weapon_priority" value="78" overrideParent="True" />
+		</template_reference>
+		<template_reference name="exts" value="ebpextensions\type_ext" List.ItemID="1904526622" List.ParentItemID="1904526622">
+			<enum name="weapon_targeting" value="automatic" overrideParent="True" />
+			<list name="attack_target_restriction_on_attacker" removedIds="-1289956425">
+			</list>
+		</template_reference>
+		<template_reference name="exts" value="ebpextensions\territory_sector_layout_ext" List.ItemID="-1904123328" List.ParentItemID="-1904123328">
+			<template_reference name="placement_style" value="options\ebpextensions\hexmapext\placement_styles\placement_primary">
+				<instance_reference name="fence_cap_entity" value="ebps\races\core\buildings\building_defense_wall_bastion" mod="dc9c718459894f58869e73a73f33effc" overrideParent="True" />
+			</template_reference>
+		</template_reference>
+	</list>
+	<uniqueid name="pbgid" value="120739" />
+	<instance_reference name="parent_pbg" value="ebps\races\core\buildings\building_defense_wall" />
+</instance>

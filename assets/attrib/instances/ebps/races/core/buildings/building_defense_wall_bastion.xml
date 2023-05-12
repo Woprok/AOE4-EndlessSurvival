@@ -1,0 +1,14 @@
+<instance version="4" description="" template="ebps">
+	<list name="extensions">
+		<template_reference name="exts" value="ebpextensions\health_ext" List.ItemID="-1456959780" List.ParentItemID="-1456959780">
+			<float name="weapon_priority" value="25" overrideParent="True" />
+		</template_reference>
+		<template_reference name="exts" value="ebpextensions\type_ext" List.ItemID="-936535524" List.ParentItemID="-936535524">
+			<enum name="weapon_targeting" value="automatic" overrideParent="True" />
+			<list name="attack_target_restriction_on_attacker" removedIds="-2130385447">
+			</list>
+		</template_reference>
+	</list>
+	<uniqueid name="pbgid" value="129755" />
+	<instance_reference name="parent_pbg" value="ebps\races\core\buildings\building_defense_wall_bastion" />
+</instance>

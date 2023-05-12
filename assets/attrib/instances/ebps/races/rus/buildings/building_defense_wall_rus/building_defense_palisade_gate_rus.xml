@@ -1,0 +1,36 @@
+<instance version="4" description="" template="ebps">
+	<list name="extensions">
+		<template_reference name="exts" value="ebpextensions\entity_blueprint_ext" List.ItemID="785177981" List.ParentItemID="785177981">
+			<instance_reference name="animator_attachments" value="attachments\attachment_lists\civilizations\rus\buildings\building_defense_wall_rus\building_defense_palisade_gate_rus" overrideParent="True" />
+			<bool name="browsable_in_editor" value="True" overrideParent="True" />
+		</template_reference>
+		<template_reference name="exts" value="ebpextensions\health_ext" List.ItemID="204034348" List.ParentItemID="204034348">
+			<float name="hitpoints" value="2500" overrideParent="True" />
+		</template_reference>
+		<template_reference name="exts" value="ebpextensions\type_ext" List.ItemID="1100494298" List.ParentItemID="1100494298">
+			<list name="race_type_list" overrideParent="True">
+				<instance_reference name="race_type" value="racebps\rus" List.ItemID="-1883503268" />
+			</list>
+		</template_reference>
+		<template_reference name="exts" value="ebpextensions\construction_ext" List.ItemID="-1019191511" List.ParentItemID="-1019191511">
+			<template_reference name="construction_health_option" value="options\ebpextensions\constructionext\construction_health_option">
+				<float name="initial_health" value="300" overrideParent="True" />
+			</template_reference>
+		</template_reference>
+		<template_reference name="exts" value="ebpextensions\ui_ext" List.ItemID="1648115325" List.ParentItemID="1648115325">
+			<bool name="is_unique_to_race" value="True" overrideParent="True" />
+			<string name="telemetry_name" value="Fortified Palisade Gate" overrideParent="True" />
+		</template_reference>
+		<template_reference name="exts" value="ebpextensions\burn_ext" List.ItemID="1652847968" List.ParentItemID="1652847968">
+			<float name="on_fire_damage_per_sec" value="12" overrideParent="True" />
+			<float name="on_fire_threshold" value="60" overrideParent="True" />
+		</template_reference>
+		<template_reference name="exts" value="ebpextensions\territory_sector_layout_ext" List.ItemID="151295069" List.ParentItemID="151295069">
+			<template_reference name="placement_style" value="options\ebpextensions\hexmapext\placement_styles\placement_primary_fence_replacer">
+				<instance_reference name="blueprint_to_replace" value="ebps\races\rus\buildings\building_defense_wall_rus\building_defense_palisade_rus" overrideParent="True" />
+			</template_reference>
+		</template_reference>
+	</list>
+	<uniqueid name="pbgid" value="133574" />
+	<instance_reference name="parent_pbg" value="ebps\races\core\buildings\building_defense_palisade_gate" mod="dc9c718459894f58869e73a73f33effc" />
+</instance>

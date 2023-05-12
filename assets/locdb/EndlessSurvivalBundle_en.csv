@@ -409,7 +409,7 @@
 408,,,ags_protection_data,,,Command Center Wiped Out
 409,,,ags_protection_data,,,%1PLAYER_NAME%'s Command Center Wiped Out
 410,,,extra_text,,,Command Center
-411,,,help_text,,,Last Bastion of the Humanity in their fight against the monsters. Protect this for as long as you can against the endless hordes. Are we actually sure they are monsters ? They kind of look like angry peasants with lot of dangerous tools.
+411,,,help_text,,,Last Bastion of the Humanity in their fight against the monsters. Protect this for as long as you can against the endless hordes.\nAre we actually sure they are monsters ?\nThey kind of look like angry peasants with lot of dangerous tools.
 412,,,screen_name,,,Command Center
 413,,,,,,Survival Settings
 414,,,,,,Difficulty
@@ -442,3 +442,14 @@
 441,,,,,,75%
 442,,,,,,125%
 443,,,,,,175%
+444,,,extra_text,,,Monster
+445,,,help_text,,,Desires to destroy everything. Looks like they forget to bring their favorite pitchfork.
+446,,,screen_name,,,Peasant
+447,,,extra_text,,,"Monster, Ranged"
+448,,,help_text,,,Desires to shoot everything. Where did they found the bows ?
+449,,,screen_name,,,Hunter
+450,,,extra_text,,,Demolition Monster
+451,,,screen_name,,,Burning Land-Ship
+452,,,help_text,,,Demolition Monster
+453,,,screen_name,,,Demolition Monster
+454,,,ags_survival_data,,,Current wave %1NUMBER%.

@@ -992,9 +992,10 @@
 			<!--WinCondition/PrecacheList/-->
 			<DataObject Name="" Type="PrecacheList" Id="4580710104844298454" OwnerId="5122982481647019464">
 				<DataProperty Name="m_precacheItems" Type="Object">
-					<DataValue Name="SquadPrecacheItem">11225618916440384102</DataValue>
 					<DataValue Name="EntityPrecacheItem">7967115773896959231</DataValue>
 					<DataValue Name="EntityPrecacheItem">4626328489214126819</DataValue>
+					<DataValue Name="SquadPrecacheItem">6435370440593826054</DataValue>
+					<DataValue Name="SquadPrecacheItem">11354178608961181243</DataValue>
 					<!--WinCondition/PrecacheList/EntityPrecacheItem/-->
 					<DataObject Name="" Type="EntityPrecacheItem" Id="4626328489214126819" OwnerId="4580710104844298454">
 						<DataProperty Name="#BaseTypes" Type="String" Value="IPrecacheItem#0|"/>
@@ -1004,6 +1005,18 @@
 							<DataObject Name="" Type="ReflectPBG_EntityProperties" Id="8311103380225216632" OwnerId="4626328489214126819">
 								<DataProperty Name="#BaseTypes" Type="String" Value="PropertyBagGroupReflectReference#0|Provider_PropertyBagGroup#0|"/>
 								<DataProperty Name="m_fileName" Type="String" Value="york_wooden_castle_eng"/>
+							</DataObject>
+						</DataProperty>
+					</DataObject>
+					<!--WinCondition/PrecacheList/SquadPrecacheItem/-->
+					<DataObject Name="" Type="SquadPrecacheItem" Id="6435370440593826054" OwnerId="4580710104844298454">
+						<DataProperty Name="#BaseTypes" Type="String" Value="IPrecacheItem#0|"/>
+						<DataProperty Name="m_blueprint" Type="Object">
+							<DataValue Name="ReflectPBG_SquadProperties">11477344760532895042</DataValue>
+							<!--WinCondition/PrecacheList/SquadPrecacheItem/ReflectPBG_SquadProperties/-->
+							<DataObject Name="" Type="ReflectPBG_SquadProperties" Id="11477344760532895042" OwnerId="6435370440593826054">
+								<DataProperty Name="#BaseTypes" Type="String" Value="PropertyBagGroupReflectReference#0|Provider_PropertyBagGroup#0|"/>
+								<DataProperty Name="m_fileName" Type="String" Value="dc9c718459894f58869e73a73f33effc:unit_survival_peasant_pitchfork"/>
 							</DataObject>
 						</DataProperty>
 					</DataObject>
@@ -1020,14 +1033,14 @@
 						</DataProperty>
 					</DataObject>
 					<!--WinCondition/PrecacheList/SquadPrecacheItem/-->
-					<DataObject Name="" Type="SquadPrecacheItem" Id="11225618916440384102" OwnerId="4580710104844298454">
+					<DataObject Name="" Type="SquadPrecacheItem" Id="11354178608961181243" OwnerId="4580710104844298454">
 						<DataProperty Name="#BaseTypes" Type="String" Value="IPrecacheItem#0|"/>
 						<DataProperty Name="m_blueprint" Type="Object">
-							<DataValue Name="ReflectPBG_SquadProperties">16525768676686214221</DataValue>
+							<DataValue Name="ReflectPBG_SquadProperties">17407209844393175062</DataValue>
 							<!--WinCondition/PrecacheList/SquadPrecacheItem/ReflectPBG_SquadProperties/-->
-							<DataObject Name="" Type="ReflectPBG_SquadProperties" Id="16525768676686214221" OwnerId="11225618916440384102">
+							<DataObject Name="" Type="ReflectPBG_SquadProperties" Id="17407209844393175062" OwnerId="11354178608961181243">
 								<DataProperty Name="#BaseTypes" Type="String" Value="PropertyBagGroupReflectReference#0|Provider_PropertyBagGroup#0|"/>
-								<DataProperty Name="m_fileName" Type="String" Value="dc9c718459894f58869e73a73f33effc:spearzombie"/>
+								<DataProperty Name="m_fileName" Type="String" Value="dc9c718459894f58869e73a73f33effc:unit_survival_peasant_hunter"/>
 							</DataObject>
 						</DataProperty>
 					</DataObject>

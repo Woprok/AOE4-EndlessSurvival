@@ -208,7 +208,7 @@ function AGS_Protection_StartPeace()
 	if AGS_GLOBAL_SETTINGS.ProtectionSettings.ChangeRelations then
 		AGS_Protection_DisableFighting()
 	end
-	AGS_Print("AGS_Treaty_StartPeace-Over")
+	AGS_Print("AGS_Protection_StartPeace-Over")
 end
 -- Supplements peace
 function AGS_Protection_DisableFighting()

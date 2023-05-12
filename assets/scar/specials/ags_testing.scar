@@ -9,6 +9,7 @@
 
 AGS_TESTING_MODULE = "AGS_Testing"
 AGS_TESTING_HOT_RELOAD  = "E:/Mods/Age of Empires IV/AOE4-EndlessSurvivalBundle/assets/scar/"
+
 ---------------------------------------------------------------------------------------------------
 -- Delegates:
 ---------------------------------------------------------------------------------------------------
@@ -34,6 +35,11 @@ function AGS_Testing_OnPlay()
 	AGS_Print("AGS_Testing_OnPlay")
 	for _, player in pairs(PLAYERS) do
 		AGS_Print(player.id, player.raceName)
+		
+		Player_SetResource(player.id, RT_Food, 50000)
+		Player_SetResource(player.id, RT_Wood, 50000)
+		Player_SetResource(player.id, RT_Stone,50000)
+		Player_SetResource(player.id, RT_Gold, 50000)
 	end
 end		
 

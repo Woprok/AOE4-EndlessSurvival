@@ -1,0 +1,232 @@
+<instance version="4" description="" template="ebps">
+	<list name="extensions" comment="Only extensions that should have something to be always set same on all childrens.">
+		<template_reference name="exts" value="ebpextensions\type_ext" comment="Requires:&#xD;&#xA;attack_target_restriction_on_victim -&gt; hero&#xD;&#xA;unit_type_list -&gt; hero" List.ItemID="1233043590">
+			<list name="unit_type_list" comment="Requires hero type.">
+				<enum name="unit_type" value="hero" List.ItemID="-192381482" />
+			</list>
+			<enum name="weapon_targeting" value="automatic" />
+			<enum_table name="weapon_category_targeting_filter">
+				<bool name="1melee" value="True" />
+				<bool name="2ranged" value="True" />
+				<bool name="3siege" value="False" />
+				<bool name="4charge" value="True" />
+				<bool name="5brace" value="True" />
+				<bool name="6auto_ability_cast" value="True" />
+				<bool name="7single_cast_ability" value="True" />
+				<bool name="8dummy" value="False" />
+				<bool name="9idle" value="True" />
+			</enum_table>
+			<bool name="intersection_testing" value="False" />
+			<list name="race_type_list">
+			</list>
+			<list name="attack_target_restriction_on_attacker">
+			</list>
+			<list name="attack_target_restriction_on_victim" comment="Requires hero type.">
+				<enum name="unit_type" value="hero" List.ItemID="-95499782" />
+			</list>
+			<list name="unit_type_list_selection_keybind_only">
+			</list>
+			<list name="unit_type_list_ui_appear_as_only">
+			</list>
+		</template_reference>
+		<template_reference name="exts" value="ebpextensions\combat_ext" comment="attack_move, idle_targeting needs to be set to max, so use these values" List.ItemID="-811402884">
+			<bool name="reject_attack_command" value="False" />
+			<list name="hardpoints" comment="Per unit as this requires model etc.">
+			</list>
+			<int name="sight_hardpoint" value="-1" />
+			<float name="block_frontal_arc" value="0" />
+			<int name="block_melee_blocks_per_sequence" value="0" />
+			<int name="block_melee_incoming_attack_sequence_length" value="1" />
+			<group name="attack_move" comment="Attack move is set to max.">
+				<float name="attack_move_targeting_range" value="100" />
+				<float name="attack_move_priority_per_distance_meter" value="-0.2" />
+			</group>
+			<group name="idle_targeting" comment="Idle targeting is set to max.">
+				<float name="idle_priority_per_angle_degree" value="-0.01" />
+				<float name="idle_priority_per_distance_meter" value="-0.1" />
+				<float name="idle_targeting_range" value="100" />
+				<float name="idle_priority_per_distance_unit_angle_multiplier" value="0" />
+			</group>
+			<float name="scan_interval_cached_target_invalid" value="0.5" />
+			<float name="scan_interval_cached_target_valid" value="2" />
+			<template_reference name="kill_action_tree" value="state_tree_reference_info">
+				<state_tree_node name="ActionTree_OpeningBranch" value="" />
+				<bool name="start_suspended" value="False" />
+			</template_reference>
+			<string name="combat_choice_tree" value="entity_combat_manager" />
+			<int name="block_ranged_blocks_per_sequence" value="0" />
+			<int name="block_ranged_incoming_attack_sequence_length" value="1" />
+			<int name="block_projectile_incoming_attack_sequence_length" value="1" />
+			<int name="block_projectile_blocks_per_sequence" value="0" />
+			<bool name="unequip_weapons_on_death" value="True" />
+			<group name="combat_scan_intervals">
+				<group name="attack_move_scan_intervals">
+					<float name="interval_with_invalid_target" value="1" />
+					<float name="interval_with_valid_target" value="2" />
+					<float name="interval_with_valid_target_frequent" value="0.5" />
+					<float name="frequent_scan_radius" value="0" />
+				</group>
+				<group name="forced_engagement_scan_intervals">
+					<float name="interval_with_invalid_target" value="0.375" />
+					<float name="interval_with_valid_target" value="2" />
+				</group>
+				<group name="idle_scan_intervals">
+					<float name="interval_with_invalid_target" value="1" />
+					<float name="interval_with_valid_target" value="2" />
+					<float name="interval_with_valid_target_frequent" value="0.5" />
+					<float name="frequent_scan_radius" value="0" />
+				</group>
+			</group>
+			<bool name="ui_show_most_progressed_weapon_reload" value="False" />
+			<list name="target_scanning_priority_override">
+			</list>
+		</template_reference>
+		<template_reference name="exts" value="ebpextensions\health_ext" comment="Setting aggresive option is required for all childrens." List.ItemID="-1419211722">
+			<bool name="can_repair" value="False" />
+			<bool name="cuttable" value="False" />
+			<string name="death_event_name" value="Death" />
+			<float name="death_seconds" value="19" />
+			<bool name="delete_when_dead" value="True" />
+			<bool name="force_attacker_memory" value="False" />
+			<float name="hitpoints" value="10" />
+			<bool name="is_invincible" value="False" />
+			<bool name="is_salvagable_wreck" value="False" />
+			<instance_reference name="rebuilt_entity" value="" />
+			<instance_reference name="rebuilt_squad" value="" />
+			<bool name="rebuilt_use_wreck_owner" value="False" />
+			<bool name="receive_weapon_cover_modifiers" value="True" />
+			<float name="regeneration" value="0" />
+			<bool name="regeneration_disabled" value="True" />
+			<bool name="remove_from_pathfinding_on_death" value="True" />
+			<bool name="reveal_to_all_on_death" value="False" />
+			<bool name="ui_can_scuttle" value="True" />
+			<float name="target_size" value="1" />
+			<float name="weapon_priority" value="100" />
+			<template_reference name="wreck_entity_option" value="options\none">
+			</template_reference>
+			<enum name="armor_type" value="None" />
+			<template_reference name="armor_layout_option" value="options\ebpextensions\healthext\armor_layouts\armor_layout_uniform">
+				<float name="armor" value="1" />
+			</template_reference>
+			<enum name="allegiance_override" value="enemy_to_all" comment="Required for neutral units to be able to attack." />
+			<bool name="not_default_attackable" value="False" />
+			<bool name="can_be_damaged_by_ally" value="False" />
+			<enum_table name="armor_scaler_by_damage_type">
+				<float name="True Damage" value="0" />
+				<float name="Melee" value="0" />
+				<float name="Ranged" value="0" />
+				<float name="Fire" value="0" />
+			</enum_table>
+			<state_tree_node name="death_action_tree" value="" />
+			<template_reference name="self_destruct_action_tree" value="state_tree_reference_info">
+				<state_tree_node name="ActionTree_OpeningBranch" value="" />
+				<bool name="start_suspended" value="False" />
+			</template_reference>
+			<template_reference name="rebuilt_entity_action_tree" value="state_tree_reference_info">
+				<state_tree_node name="ActionTree_OpeningBranch" value="" />
+				<bool name="start_suspended" value="False" />
+			</template_reference>
+			<template_reference name="on_received_damage_action_tree" value="state_tree_reference_info">
+				<state_tree_node name="ActionTree_OpeningBranch" value="" />
+				<bool name="start_suspended" value="False" />
+			</template_reference>
+			<state_tree_node name="on_reach_invulnerable_min_cap_entity_state_tree_ref" value="" />
+			<state_tree_node name="on_reach_max_health_entity_state_tree_ref" value="" />
+		</template_reference>
+		<template_reference name="exts" value="ebpextensions\stimulus_emission_ext" comment="Changed to have more group like behaviour." List.ItemID="-36347303">
+			<list name="emittable_stimulus_types">
+				<enum name="stimulus_type" value="group_retaliation" List.ItemID="573075189" />
+			</list>
+		</template_reference>
+		<template_reference name="exts" value="ebpextensions\stimulus_perception_ext" comment="Changed to have more group like behaviour." List.ItemID="325119420">
+			<enum_table name="stimulus_perception_info">
+				<group name="herding_interest">
+					<bool name="enable_perception" value="False" />
+					<template_reference name="perception_requirement" value="">
+					</template_reference>
+				</group>
+				<group name="charge">
+					<bool name="enable_perception" value="False" />
+					<template_reference name="perception_requirement" value="">
+					</template_reference>
+				</group>
+				<group name="tense">
+					<bool name="enable_perception" value="False" />
+					<template_reference name="perception_requirement" value="">
+					</template_reference>
+				</group>
+				<group name="shock">
+					<bool name="enable_perception" value="False" />
+					<template_reference name="perception_requirement" value="">
+					</template_reference>
+				</group>
+				<group name="evacuate_area">
+					<bool name="enable_perception" value="False" />
+					<template_reference name="perception_requirement" value="">
+					</template_reference>
+				</group>
+				<group name="dropoff_resource">
+					<bool name="enable_perception" value="False" />
+					<template_reference name="perception_requirement" value="">
+					</template_reference>
+				</group>
+				<group name="group_retaliation">
+					<bool name="enable_perception" value="True" />
+					<template_reference name="perception_requirement" value="stimulus_perception_requirement">
+						<group name="facing_requirement">
+							<float name="facing_angle_range" value="360" />
+						</group>
+						<group name="alliance_requirement">
+							<bool name="ally" value="True" />
+							<bool name="enemy" value="False" />
+							<bool name="neutral" value="True" />
+						</group>
+					</template_reference>
+				</group>
+				<group name="hunting_cabin_destroyed">
+					<bool name="enable_perception" value="False" />
+					<template_reference name="perception_requirement" value="">
+					</template_reference>
+				</group>
+			</enum_table>
+		</template_reference>
+		<template_reference name="exts" value="ebpextensions\sight_ext" comment="Sight should be same as this. It's increased version of scout vision." List.ItemID="895803462" List.ParentItemID="895803462">
+			<group name="sight_package">
+				<float name="outer_radius" value="50" />
+				<float name="inner_height" value="501" />
+				<float name="inner_radius" value="12" />
+				<float name="outer_height" value="-15" />
+				<float name="cone_angle" value="360" />
+				<float name="cone_start_radius" value="0" />
+			</group>
+			<group name="detect_camouflage">
+				<float name="tp_global" value="10" />
+				<float name="tp_mine" value="0" />
+				<float name="tp_unit" value="0" />
+			</group>
+			<bool name="extended_sight" value="False" />
+			<float name="extended_sight_radius" value="0" />
+			<float name="reveal_area_on_death_time" value="1.5" />
+			<list name="extended_sight_target_requirements">
+			</list>
+			<list name="specific_detector_actions">
+			</list>
+			<group name="vertical_truesight">
+				<bool name="enable" value="False" />
+				<float name="tolerance" value="1" />
+				<float name="eye_height" value="2.5" />
+			</group>
+			<bool name="blockers_check_bounding_box" value="False" />
+			<bool name="camouflage_detection_enabled" value="False" />
+			<group name="stealth_detection">
+				<bool name="enabled" value="True" />
+				<float name="radius" value="32" />
+				<float name="throttle" value="0" />
+			</group>
+		</template_reference>
+		<template_reference name="exts" value="ebpextensions\modifier_ext" comment="This is required for upgrades to be applied." List.ItemID="360296787">
+		</template_reference>
+	</list>
+	<uniqueid name="pbgid" value="1073741830" />
+	<instance_reference name="parent_pbg" value="" />
+</instance>

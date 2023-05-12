@@ -15,7 +15,10 @@
 --
 -- Technical:
 -- Core_CallDelegateFunctions("SurvivalEnded") is called if the mod is over due to last wave being spawned.
+-- check if this works AIPlayer_RequestHighPath, AIPlayer_ProcessedPathSuccessful
 ---------------------------------------------------------------------------------------------------
+
+import("conditions/conditiondata/ags_survival_data.scar")
 
 AGS_SURVIVAL_MODULE = "AGS_Survival"
 -- Each unit represents single key
@@ -27,14 +30,29 @@ AGS_SURVIVAL_UNITS = {
 	-- weight is how much it should favor spawning this unit if possible, higher is better
 	-- key that is used as identifier
 	-- always keep here at least one unit with cost of 1
-	[1] = { bp = "dc9c718459894f58869e73a73f33effc:spearzombie", cost = 1, min_wave = 1, weight = 1 }
+	[1] = { bp = "dc9c718459894f58869e73a73f33effc:unit_survival_peasant_pitchfork", cost = 1, min_wave = 1, weight = 100 },
+	[2] = { bp = "dc9c718459894f58869e73a73f33effc:unit_survival_peasant_hunter", cost = 2, min_wave = 10, weight = 50 },
 }
+AGS_SURVIVAL_COSMETIC_FREQUENCY = 1 -- tick is 0.125
 AGS_SURVIVAL_CHECK_FREQUENCY = 0.5 -- tick is 0.125
-AGS_SURVIVAL_SPAWN_FREQUENCY = 5
+AGS_SURVIVAL_SPAWN_FREQUENCY = 15 -- every 15 secs is check invoked.
 AGS_SURVIVAL_SPAWNS_CHECKS = { }
 AGS_SURVIVAL_SPAWNS = { }
 AGS_SURVIVAL_WAVES = {
 	NameScheme = "AGS_Survival_Wave",
+	SchedulerTimer = 0, -- current time saved
+	SchedulerWaitTime = 0, -- keep this same as first item
+	SchedulerWave = {
+		-- Wave that must be reached for use.
+		-- Interval that must have passed.
+		[1] = { FromWave = 00, Interval = AGS_SURVIVAL_SPAWN_FREQUENCY * 10, }, 
+		[2] = { FromWave = 01, Interval = AGS_SURVIVAL_SPAWN_FREQUENCY * 8, }, 
+		[3] = { FromWave = 05, Interval = AGS_SURVIVAL_SPAWN_FREQUENCY * 7, }, 
+		[4] = { FromWave = 11, Interval = AGS_SURVIVAL_SPAWN_FREQUENCY * 5, },
+		[5] = { FromWave = 26, Interval = AGS_SURVIVAL_SPAWN_FREQUENCY * 3, },
+		[6] = { FromWave = 51, Interval = AGS_SURVIVAL_SPAWN_FREQUENCY * 2, },
+		[6] = { FromWave = 76, Interval = AGS_SURVIVAL_SPAWN_FREQUENCY * 1, },
+	},	
 	LastWave = 0,
 	LastWaveCost = 0,
 	FinalWave = 0,
@@ -49,9 +67,6 @@ AGS_SURVIVAL_WAVES = {
 	NotifyWaveAppearedBlip = "cta_alarm", -- "threat_group",
 	NotifyWaveAppearedSound = "sfx_campaign_scripted_attack_horn_under_attack_high",
 }
--- Zombies will have the skin of a villager and have 150% the movement speed of one, and 10 damage 
--- wave 1 starts at 5 mins which consists of 5 zombies, zombies run in from the edges of the map from random directions 
--- and every 2 mins from then will have another wave (each getting bigger) a timer on screen will show when the next wave is approaching
 ---------------------------------------------------------------------------------------------------
 -- Delegates:
 ---------------------------------------------------------------------------------------------------
@@ -78,7 +93,11 @@ end
 
 function AGS_Survival_OnPlay()
 	AGS_Print("AGS_Survival_OnPlay")
-	Rule_AddInterval(AGS_Survival_OnTimerTick, AGS_SURVIVAL_SPAWN_FREQUENCY)	
+	Rule_AddInterval(AGS_Survival_OnTimerTick, AGS_SURVIVAL_SPAWN_FREQUENCY)
+	-- Cosmetics have lesser priority.
+	AGS_Survival_CreateObjective()
+	AGS_Survival_StartCosmeticTimer()
+	Rule_AddInterval(AGS_Survival_OnCosmeticTick, AGS_SURVIVAL_COSMETIC_FREQUENCY)	
 end
 
 function AGS_Survival_OnGameOver()
@@ -89,6 +108,10 @@ function AGS_Survival_OnGameOver()
 	if Rule_Exists(AGS_Survival_CheckWavesAlive) then
 		Rule_Remove(AGS_Survival_CheckWavesAlive)
 	end
+	if Rule_Exists(AGS_Survival_OnCosmeticTick) then
+		Rule_Remove(AGS_Survival_OnCosmeticTick)
+	end
+	AGS_Survival_RemoveObjective()
 end
 
 ---------------------------------------------------------------------------------------------------
@@ -96,6 +119,7 @@ end
 ---------------------------------------------------------------------------------------------------
 
 function AGS_Survival_OnTimerTick()	
+	-- Wave starts
 	if AGS_SURVIVAL_WAVES.LastWave == AGS_SURVIVAL_WAVES.FinalWave then
 		-- Final wave was already sent and we can mark this as over.
 		Rule_RemoveMe()
@@ -104,7 +128,24 @@ function AGS_Survival_OnTimerTick()
 		Rule_AddInterval(AGS_Survival_CheckWavesAlive, AGS_SURVIVAL_CHECK_FREQUENCY)
 		return
 	end
-	AGS_Survival_StartNewWaveGroup()
+	
+	-- Scheduler advances by the specified time regardless of circumstances
+	AGS_SURVIVAL_WAVES.SchedulerTimer = AGS_SURVIVAL_WAVES.SchedulerTimer + AGS_SURVIVAL_SPAWN_FREQUENCY
+	-- Select latest scheduler
+	local current_schedule = AGS_Survival_GetLatestScheduler()
+	
+	if current_schedule == nil then
+		AGS_Print("AGS_Survival_OnTimerTick-Scheduler-Error")
+		return
+	end
+	
+	-- with schedule we can now use % to determine if wave is supposed to spawn
+	AGS_SURVIVAL_WAVES.SchedulerTimer = AGS_SURVIVAL_WAVES.SchedulerTimer % current_schedule.Interval
+	-- wave is spawned on 0, otherwise we end.
+	if AGS_SURVIVAL_WAVES.SchedulerTimer == 0 then
+		AGS_Survival_StartNewWaveGroup()
+		AGS_Survival_StartCosmeticTimer()
+	end	
 end
 
 function AGS_Survival_CheckWavesAlive()
@@ -251,7 +292,8 @@ function AGS_Survival_SpawnUnitGroup(initiator_id, spawn_position, target_positi
 	-- Icon
 	SGroup_ForEach(sgroup, AGS_Survival_AddIcon)
 	-- Notify
-	AGS_Survival_WaveAppearedWarning(spawn_position)
+	AGS_Survival_WaveAppearedWarning(spawn_position)	
+	
 	-- Clean
 	SGroup_Destroy(sgroup)
 end
@@ -287,21 +329,79 @@ function AGS_Survival_GetRandomUnit(max_wave, max_unit_cost)
 	-- chances
 	local total_weight = 0
 	for key, data in pairs(AGS_SURVIVAL_UNITS) do 
-		if max_unit_cost <= data.cost and max_wave >= data.min_wave then
+		if max_unit_cost >= data.cost and max_wave >= data.min_wave then
 			total_weight = total_weight + data.weight
 		end
 	end
 	-- rng (this must synchronize)
-	local final_weight = World_GetRand(0, total_weight)
+	local generated_weight = World_GetRand(1, total_weight)
+	local incrementing_weight = 0
 	-- retrieve unit
 	for key, data in pairs(AGS_SURVIVAL_UNITS) do 
-		if max_unit_cost <= data.cost and max_wave >= data.min_wave then
-			final_weight = final_weight - data.weight
-			if final_weight <= 0 then
+		if max_unit_cost >= data.cost and max_wave >= data.min_wave then
+			incrementing_weight = incrementing_weight + data.weight
+			if incrementing_weight >= generated_weight then
 				return key
 			end			
 		end
 	end
+	AGS_Print("AGS_Survival_GetRandomUnit-ERROR")
 	-- if this failed return unit in the table under key 1
 	return 1
+end
+
+-- Select latest scheduler
+function AGS_Survival_GetLatestScheduler()
+	local current_schedule = nil
+	for _, schedule in pairs(AGS_SURVIVAL_WAVES.SchedulerWave) do 
+		if AGS_SURVIVAL_WAVES.LastWave >= schedule.FromWave then
+			current_schedule = schedule
+		end		
+	end	
+	return current_schedule
+end
+
+---------------------------------------------------------------------------------------------------
+-- Cosmetics & Objectives:
+---------------------------------------------------------------------------------------------------
+AGS_SURVIVAL_OBJECTIVE = nil
+AGS_SURVIVAL_TIMER = "AGS_SurvivalTimer"
+
+function AGS_Survival_CreateObjective()
+	AGS_SURVIVAL_OBJECTIVE = AGS_Objectives_Create(AGS_OBJECTIVES_SURVIVAL, AGS_GS_LOCAL_PLAYER)
+	AGS_Objectives_Set(AGS_SURVIVAL_OBJECTIVE, OS_Incomplete, true, nil, COUNTER_TimerDecreasing)
+end
+
+function AGS_Survival_UpdateObjective()
+	AGS_Objectives_Progress(
+		AGS_SURVIVAL_OBJECTIVE, 
+		nil,
+		nil,
+		nil,
+		Timer_GetRemaining(AGS_SURVIVAL_TIMER)
+	)
+	AGS_Objectives_SetTitle(AGS_SURVIVAL_OBJECTIVE, AGS_OBJECTIVES_SURVIVAL.title, AGS_SURVIVAL_WAVES.LastWave)
+end
+-- Called only on start and when wave is spawned.
+function AGS_Survival_StartCosmeticTimer(next_wait_time)
+	local current_schedule = AGS_Survival_GetLatestScheduler()
+	
+	if current_schedule == nil then
+		AGS_Print("AGS_Survival_StartCosmeticTimer-Scheduler-Error")
+		return
+	end
+	
+	-- Start countdown.
+	--if not Timer_Exists(AGS_SURVIVAL_TIMER) then	
+	Timer_Start(AGS_SURVIVAL_TIMER, current_schedule.Interval)
+	--end
+	AGS_Survival_UpdateObjective()
+end
+
+function AGS_Survival_OnCosmeticTick()
+	AGS_Survival_UpdateObjective()
+end
+
+function AGS_Survival_RemoveObjective()
+	AGS_Objectives_Set(AGS_SURVIVAL_OBJECTIVE, nil, false)
 end

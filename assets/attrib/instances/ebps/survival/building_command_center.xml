@@ -760,7 +760,7 @@
 			<bool name="reveal_to_all_on_death" value="False" />
 			<bool name="ui_can_scuttle" value="True" />
 			<float name="target_size" value="5" />
-			<float name="weapon_priority" value="80" />
+			<float name="weapon_priority" value="81" comment="Force this to be targeted sooner then rest." />
 			<template_reference name="wreck_entity_option" value="options\none">
 			</template_reference>
 			<enum name="armor_type" value="None" />

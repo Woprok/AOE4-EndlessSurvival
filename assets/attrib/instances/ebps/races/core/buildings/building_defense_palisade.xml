@@ -1,0 +1,12 @@
+<instance version="4" description="" template="ebps">
+	<list name="extensions">
+		<template_reference name="exts" value="ebpextensions\health_ext" List.ItemID="261052378" List.ParentItemID="261052378">
+			<float name="weapon_priority" value="78" overrideParent="True" />
+		</template_reference>
+		<template_reference name="exts" value="ebpextensions\type_ext" List.ItemID="-478749961" List.ParentItemID="-478749961">
+			<enum name="weapon_targeting" value="automatic" overrideParent="True" />
+		</template_reference>
+	</list>
+	<uniqueid name="pbgid" value="120738" />
+	<instance_reference name="parent_pbg" value="ebps\races\core\buildings\building_defense_palisade" />
+</instance>

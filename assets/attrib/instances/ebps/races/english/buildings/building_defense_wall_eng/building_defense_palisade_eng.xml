@@ -1,0 +1,33 @@
+<instance version="4" description="" template="ebps">
+	<list name="extensions">
+		<template_reference name="exts" value="ebpextensions\entity_blueprint_ext" List.ItemID="1942916370" List.ParentItemID="1942916370">
+			<bool name="browsable_in_editor" value="True" overrideParent="True" />
+			<enum name="subclass_type" value="Wall" overrideParent="True" />
+		</template_reference>
+		<template_reference name="exts" value="ebpextensions\health_ext" List.ItemID="261052378" List.ParentItemID="261052378">
+			<bool name="can_repair" value="True" overrideParent="True" />
+		</template_reference>
+		<template_reference name="exts" value="ebpextensions\line_of_sight_ext" List.ItemID="-1181036222" List.ParentItemID="-1181036222">
+			<list name="blocked_weapon_types" overrideParent="True">
+				<enum name="line_of_sight_blocked_weapon_type" value="melee" List.ItemID="1816632368" />
+				<enum name="line_of_sight_blocked_weapon_type" value="ranged" List.ItemID="699964405" />
+				<enum name="line_of_sight_blocked_weapon_type" value="siege" List.ItemID="1615758744" />
+			</list>
+		</template_reference>
+		<template_reference name="exts" value="ebpextensions\type_ext" List.ItemID="-478749961" List.ParentItemID="-478749961">
+			<list name="race_type_list" overrideParent="True">
+				<instance_reference name="race_type" value="racebps\english" List.ItemID="2130722246" />
+			</list>
+		</template_reference>
+		<template_reference name="exts" value="ebpextensions\construction_ext" List.ItemID="280898031" List.ParentItemID="280898031">
+			<bool name="construction_site_erase_inactive" value="False" overrideParent="True" />
+		</template_reference>
+		<template_reference name="exts" value="ebpextensions\territory_sector_layout_ext" List.ItemID="-1710736497" List.ParentItemID="-1710736497">
+			<template_reference name="placement_style" value="options\ebpextensions\hexmapext\placement_styles\placement_primary">
+				<instance_reference name="fence_cap_entity" value="ebps\races\english\buildings\building_defense_wall_eng\building_defense_palisade_bastion_eng" mod="dc9c718459894f58869e73a73f33effc" overrideParent="True" />
+			</template_reference>
+		</template_reference>
+	</list>
+	<uniqueid name="pbgid" value="166246" />
+	<instance_reference name="parent_pbg" value="ebps\races\core\buildings\building_defense_palisade" mod="dc9c718459894f58869e73a73f33effc" />
+</instance>
